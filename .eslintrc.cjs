@@ -1,14 +1,20 @@
 module.exports = {
   root: true,
+  parser: "@typescript-eslint/parser",
+  plugins: ["@typescript-eslint"],
   env: {
     browser: true,
     es2022: true,
   },
   parserOptions: {
     sourceType: "module",
+    project: "./tsconfig.eslint.json",
+    tsconfigRootDir: __dirname,
   },
-  rules: {
-    "no-console": "error",
-    camelcase: ["error", { properties: "never" }],
-  },
+  ignorePatterns: ["dist"],
+  extends: [
+    "airbnb-base",
+    "airbnb-typescript/base",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking"
+  ],
 }

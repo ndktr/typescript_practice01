@@ -1,4 +1,6 @@
 const frontendFunc = () => {
-  const message: string = 'This is my first message at frontend'
-  return message
-}
+  const message: string = 'This is my first message at frontend';
+  return message;
+};
+
+export default frontendFunc;

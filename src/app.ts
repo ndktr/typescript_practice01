@@ -1,14 +1,15 @@
-import * as http from 'http'
+import * as http from 'http';
 
-const hostname: string = '127.0.0.1'
-const port: number = 3000
+const hostname: string = '127.0.0.1';
+const port: number = 3000;
 
 const server: http.Server = http.createServer((req, res) => {
-  res.statusCode = 200
-  res.setHeader('Content-Type', 'text/plain')
-  res.end('Hello, World')
-})
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/plain');
+  res.end('Hello, World');
+});
 
 server.listen(port, hostname, () => {
-  return `Server running at http://${hostname}:${port}/`
-})
+  // eslint-disable-next-line no-console
+  console.log(`Server running at http://${hostname}:${port}/`);
+});
