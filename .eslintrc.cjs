@@ -17,4 +17,7 @@ module.exports = {
     "airbnb-typescript/base",
     "plugin:@typescript-eslint/recommended-requiring-type-checking"
   ],
+  rules: {
+    "@typescript-eslint/lines-between-class-members": "off",
+  }
 }
