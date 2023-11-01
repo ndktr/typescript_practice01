@@ -1,2 +1,2 @@
-# shogi
-This is simple shogi app with TypeScript
+# typescript_practice01
+- simple shogi app
