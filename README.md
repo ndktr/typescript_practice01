@@ -1,4 +1,4 @@
 # typescript_practice01
 - simple shogi app
-- simple node server
 - use eslint
+- need web server (python -m http.server 8000)
