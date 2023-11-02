@@ -1,2 +1,4 @@
-# shogi
-This is simple shogi app with TypeScript + Node.js
+# typescript_practice01
+- simple shogi app
+- use eslint
+- need web server (python -m http.server 8000)
