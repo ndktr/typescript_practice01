@@ -17,21 +17,21 @@ export class Pawn extends Piece {
         super(position, player);
     }
 }
-export class Rook extends Piece {
-    constructor(position, player) {
-        super(position, player);
-        this.role = '飛';
-        const row = position[0];
-        const column = position[1];
-        this.movableAreas = [[0, column], [8, column], [row, 0], [row, 8]];
-    }
-}
-export class Bishop extends Piece {
-    constructor(position, player) {
-        super(position, player);
-        this.role = '角';
-        const row = position[0];
-        const column = position[1];
-        this.movableAreas = [[row - 1, column - 1], [row - 1, column + 1], [row + 1, column - 1], [row + 1, column + 1]];
-    }
-}
+// export class Rook extends Piece {
+//   constructor(position: number[], player: string) {
+//     super(position, player);
+//     this.role = '飛'
+//     const row = position[0];
+//     const column = position[1];
+//     this.movableAreas = [[0, column], [8, column], [row, 0], [row, 8]];
+//   }
+// }
+// export class Bishop extends Piece {
+//   constructor(position: number[], player: string) {
+//     super(position, player);
+//     this.role = '角'
+//     const row = position[0];
+//     const column = position[1];
+//     this.movableAreas = [[row-1, column-1], [row-1, column+1], [row+1, column-1], [row+1, column+1]];
+//   }
+// }
