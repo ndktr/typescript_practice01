@@ -20,12 +20,15 @@ export class Shogi implements Game {
     }
   };
 
+  setPiecesToInitialPosition(): void {
+    this.board.setPiecesToInitialPosition();
+  }
+
   start() {
     this.board.render();
     setTimeout(() => {
       this.renderMessage('welcome')
-      this.board.setInitialPositionForPlayer1();
-      this.board.setInitialPositionForPlayer2();
+      this.setPiecesToInitialPosition();
       this.board.render();
     }, 100);
   };

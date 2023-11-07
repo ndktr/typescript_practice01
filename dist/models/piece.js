@@ -1,37 +1,55 @@
 export class Piece {
     role;
     player;
-    position;
-    movableAreas;
-    constructor(position, player) {
-        this.role = '歩';
+    constructor(player) {
+        this.role = 'pawn';
         this.player = player;
-        this.position = position;
-        const row = position[0];
-        const column = position[1];
-        this.movableAreas = [[row + 1, column]];
+    }
+}
+export class King extends Piece {
+    constructor(player) {
+        super(player);
+        this.role = 'king';
+    }
+}
+export class Rook extends Piece {
+    constructor(player) {
+        super(player);
+        this.role = 'rook';
+    }
+}
+export class Bishop extends Piece {
+    constructor(player) {
+        super(player);
+        this.role = 'bishop';
+    }
+}
+export class Gold extends Piece {
+    constructor(player) {
+        super(player);
+        this.role = 'gold';
+    }
+}
+export class Silver extends Piece {
+    constructor(player) {
+        super(player);
+        this.role = 'silever';
+    }
+}
+export class Knight extends Piece {
+    constructor(player) {
+        super(player);
+        this.role = 'knight';
+    }
+}
+export class Lance extends Piece {
+    constructor(player) {
+        super(player);
+        this.role = 'lance';
     }
 }
 export class Pawn extends Piece {
-    constructor(position, player) {
-        super(position, player);
+    constructor(player) {
+        super(player);
     }
 }
-// export class Rook extends Piece {
-//   constructor(position: number[], player: string) {
-//     super(position, player);
-//     this.role = '飛'
-//     const row = position[0];
-//     const column = position[1];
-//     this.movableAreas = [[0, column], [8, column], [row, 0], [row, 8]];
-//   }
-// }
-// export class Bishop extends Piece {
-//   constructor(position: number[], player: string) {
-//     super(position, player);
-//     this.role = '角'
-//     const row = position[0];
-//     const column = position[1];
-//     this.movableAreas = [[row-1, column-1], [row-1, column+1], [row+1, column-1], [row+1, column+1]];
-//   }
-// }

@@ -1,7 +1,13 @@
-import { Piece, Pawn } from './piece.js';
+import { Piece, King, Rook, Bishop, Gold, Silver, Knight, Lance, Pawn } from './piece.js';
 
 export default class Board {
   status: string[][] | Piece[][];
+
+  private static initialPosition: string[][] = [
+    ['Lance', 'Knight', 'Silver', 'Gold', 'King', 'Gold', 'Silver', 'Knight', 'Lance'],
+    ['', 'Bishop', '', '', '', '', '', 'Rook', ''],
+    ['Pawn', 'Pawn', 'Pawn', 'Pawn', 'Pawn', 'Pawn', 'Pawn', 'Pawn', 'Pawn'],
+  ];
 
   constructor() {
     this.status = [
@@ -21,25 +27,23 @@ export default class Board {
     this.status[index] = row;
   }
   
-  updateStatusByPiece(piece: Piece): void {
-    const row = piece.position[0];
-    const column = piece.position[1];
-    this.status[row][column] = piece;
-  }
-
-  setInitialPositionForPlayer1() {
-    const row2: string[] | Piece[] = this.status[6];
-    for (let i = 0; i < 9; i++) {
-      const pawn = new Pawn([6, i], 'player1');
-      row2[i] = pawn;
-    }
-    this.updateStatusByRow(6, row2);
+  setPiecesToInitialPosition() {
+    this.setPiecesToInitialPositionForPlayer1();
   };
+
+  setPiecesToInitialPositionForPlayer1() {
+    const initialPositionForPlayer1 = Board.initialPosition;
+    initialPositionForPlayer1.map(row => {
+      console.log(row);
+      row.map(piece => new (eval(piece))('player1'));
+    });
+    console.log(initialPositionForPlayer1)
+  }
  
   setInitialPositionForPlayer2() {
     const row2: string[] | Piece[] = this.status[2];
     for (let i = 0; i < 9; i++) {
-      const pawn = new Pawn([2, i], 'player2');
+      const pawn = new Pawn('player2');
       row2[i] = pawn;
     }
     this.updateStatusByRow(2, row2);
