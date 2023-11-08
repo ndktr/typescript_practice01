@@ -54,3 +54,7 @@ html, body {
     border: 1px solid #000;
     cursor: pointer;
 }
+
+#board .row .cell .player2 {
+    transform: rotateX(180deg) scaleX(-1);
+}
