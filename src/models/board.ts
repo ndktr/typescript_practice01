@@ -4,18 +4,19 @@ export default class Board {
   status: (string | Piece)[][];
 
   constructor() {
-    this.status = this.setPiecesToInitialPosition()  
+    this.status = this.setPiecesToInitialPosition();
   };
 
   setPiecesToInitialPosition() {
-    const rowsWithPlayer1 = this.setPiecesToInitialPositionPerPlayer(1)
-    const rowsWithPlayer2 = this.setPiecesToInitialPositionPerPlayer(2)
-    console.log(rowsWithPlayer1);
-    console.log(rowsWithPlayer2);
-    const initialStatus = Array.from(
-      {length: 9}, () => Array.from({length: 9}, () => ''))
+    const rowsWithPlayer1 = (
+      this.setPiecesToInitialPositionPerPlayer(1).reverse());
+    const rowsWithPlayer2 = this.setPiecesToInitialPositionPerPlayer(2);
+    const initialStatus: (string | Piece)[][] = Array.from(
+      {length: 9}, () => Array.from({length: 9}, () => ''));
+    initialStatus.splice(6, 9, ...rowsWithPlayer1);
+    initialStatus.splice(0, 3, ...rowsWithPlayer2);
     console.log(initialStatus);
-    return initialStatus
+    return initialStatus;
   };
 
   setPiecesToInitialPositionPerPlayer(player_number: number) {
@@ -47,9 +48,9 @@ export default class Board {
       return cell 
     })
     const row3SettedPieces: (string | Piece)[] = (
-      row3.map(_ => new Pawn(player_number)))
+      row3.map(_ => new Pawn(player_number)));
 
-    return [row1SettedPieces, row2SettedPieces, row3SettedPieces]
+    return [row1SettedPieces, row2SettedPieces, row3SettedPieces];
   }
 
   render(): void {
@@ -60,7 +61,7 @@ export default class Board {
       boardChildDom += '<div class="row">';
       boardChildDom += (row.map(piece => {
         if (typeof piece === 'string') return `<div class="cell">${piece}</div>`;
-        return `<div class="cell"><span class="player${piece.player_number}">${piece.role}</span></div>`;
+        return `<div class="cell"><span class="player${piece.player_number}">${piece.displayName}</span></div>`;
       }).join(''));
       boardChildDom += '</div>';
     });

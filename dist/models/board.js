@@ -6,11 +6,11 @@ export default class Board {
     }
     ;
     setPiecesToInitialPosition() {
-        const rowsWithPlayer1 = this.setPiecesToInitialPositionPerPlayer(1);
+        const rowsWithPlayer1 = (this.setPiecesToInitialPositionPerPlayer(1).reverse());
         const rowsWithPlayer2 = this.setPiecesToInitialPositionPerPlayer(2);
-        console.log(rowsWithPlayer1);
-        console.log(rowsWithPlayer2);
         const initialStatus = Array.from({ length: 9 }, () => Array.from({ length: 9 }, () => ''));
+        initialStatus.splice(6, 9, ...rowsWithPlayer1);
+        initialStatus.splice(0, 3, ...rowsWithPlayer2);
         console.log(initialStatus);
         return initialStatus;
     }
@@ -68,7 +68,7 @@ export default class Board {
             boardChildDom += (row.map(piece => {
                 if (typeof piece === 'string')
                     return `<div class="cell">${piece}</div>`;
-                return `<div class="cell"><span class="player${piece.player_number}">${piece.role}</span></div>`;
+                return `<div class="cell"><span class="player${piece.player_number}">${piece.displayName}</span></div>`;
             }).join(''));
             boardChildDom += '</div>';
         });
