@@ -1,49 +1,63 @@
-import { Pawn } from './piece.js';
+import { King, Rook, Bishop, Gold, Silver, Knight, Lance, Pawn } from './piece.js';
 export default class Board {
     status;
-    static initialPosition = [
-        ['Lance', 'Knight', 'Silver', 'Gold', 'King', 'Gold', 'Silver', 'Knight', 'Lance'],
-        ['', 'Bishop', '', '', '', '', '', 'Rook', ''],
-        ['Pawn', 'Pawn', 'Pawn', 'Pawn', 'Pawn', 'Pawn', 'Pawn', 'Pawn', 'Pawn'],
-    ];
     constructor() {
-        this.status = [
-            ['', '', '', '', '', '', '', '', ''],
-            ['', '', '', '', '', '', '', '', ''],
-            ['', '', '', '', '', '', '', '', ''],
-            ['', '', '', '', '', '', '', '', ''],
-            ['', '', '', '', '', '', '', '', ''],
-            ['', '', '', '', '', '', '', '', ''],
-            ['', '', '', '', '', '', '', '', ''],
-            ['', '', '', '', '', '', '', '', ''],
-            ['', '', '', '', '', '', '', '', ''],
-        ];
+        this.status = this.setPiecesToInitialPosition();
     }
     ;
-    updateStatusByRow(index, row) {
-        this.status[index] = row;
-    }
     setPiecesToInitialPosition() {
-        this.setPiecesToInitialPositionForPlayer1();
+        const rowsWithPlayer1 = this.setPiecesToInitialPositionPerPlayer(1);
+        const rowsWithPlayer2 = this.setPiecesToInitialPositionPerPlayer(2);
+        console.log(rowsWithPlayer1);
+        console.log(rowsWithPlayer2);
+        const initialStatus = Array.from({ length: 9 }, () => Array.from({ length: 9 }, () => ''));
+        console.log(initialStatus);
+        return initialStatus;
     }
     ;
-    setPiecesToInitialPositionForPlayer1() {
-        const initialPositionForPlayer1 = Board.initialPosition;
-        initialPositionForPlayer1.map(row => {
-            console.log(row);
-            row.map(piece => new (eval(piece))('player1'));
+    setPiecesToInitialPositionPerPlayer(player_number) {
+        const row1 = Array.from({ length: 9 }, () => '');
+        const row2 = Array.from({ length: 9 }, () => '');
+        const row3 = Array.from({ length: 9 }, () => '');
+        const row1SettedPieces = row1.map((_, index) => {
+            if (index === 0)
+                return new Lance(player_number);
+            if (index === 1)
+                return new Knight(player_number);
+            if (index === 2)
+                return new Silver(player_number);
+            if (index === 3)
+                return new Gold(player_number);
+            if (index === 4)
+                return new King(player_number);
+            if (index === 5)
+                return new Gold(player_number);
+            if (index === 6)
+                return new Silver(player_number);
+            if (index === 7)
+                return new Knight(player_number);
+            if (index === 8)
+                return new Lance(player_number);
+            return '';
         });
-        console.log(initialPositionForPlayer1);
+        const row2SettedPieces = row2.map((cell, index) => {
+            if (player_number == 1) {
+                if (index === 1)
+                    return new Bishop(player_number);
+                if (index === 7)
+                    return new Rook(player_number);
+            }
+            if (player_number == 2) {
+                if (index === 1)
+                    return new Rook(player_number);
+                if (index === 7)
+                    return new Bishop(player_number);
+            }
+            return cell;
+        });
+        const row3SettedPieces = (row3.map(_ => new Pawn(player_number)));
+        return [row1SettedPieces, row2SettedPieces, row3SettedPieces];
     }
-    setInitialPositionForPlayer2() {
-        const row2 = this.status[2];
-        for (let i = 0; i < 9; i++) {
-            const pawn = new Pawn('player2');
-            row2[i] = pawn;
-        }
-        this.updateStatusByRow(2, row2);
-    }
-    ;
     render() {
         const boardDom = document.getElementById('board');
         if (boardDom === null)
@@ -54,7 +68,7 @@ export default class Board {
             boardChildDom += (row.map(piece => {
                 if (typeof piece === 'string')
                     return `<div class="cell">${piece}</div>`;
-                return `<div class="cell"><span class="${piece.player}">${piece.role}</span></div>`;
+                return `<div class="cell"><span class="player${piece.player_number}">${piece.role}</span></div>`;
             }).join(''));
             boardChildDom += '</div>';
         });
