@@ -2,20 +2,19 @@ import { King, Rook, Bishop, Gold, Silver, Knight, Lance, Pawn } from './piece.j
 export default class Board {
     status;
     constructor() {
-        this.status = this.setPiecesToInitialPosition();
+        this.status = Board.setPiecesToInitialPosition();
     }
     ;
-    setPiecesToInitialPosition() {
-        const rowsWithPlayer1 = (this.setPiecesToInitialPositionPerPlayer(1).reverse());
-        const rowsWithPlayer2 = this.setPiecesToInitialPositionPerPlayer(2);
+    static setPiecesToInitialPosition() {
         const initialStatus = Array.from({ length: 9 }, () => Array.from({ length: 9 }, () => ''));
+        const rowsWithPlayer1 = (Board.setPiecesToInitPerPlayer(1).reverse());
+        const rowsWithPlayer2 = Board.setPiecesToInitPerPlayer(2);
         initialStatus.splice(6, 9, ...rowsWithPlayer1);
         initialStatus.splice(0, 3, ...rowsWithPlayer2);
-        console.log(initialStatus);
         return initialStatus;
     }
     ;
-    setPiecesToInitialPositionPerPlayer(player_number) {
+    static setPiecesToInitPerPlayer(player_number) {
         const row1 = Array.from({ length: 9 }, () => '');
         const row2 = Array.from({ length: 9 }, () => '');
         const row3 = Array.from({ length: 9 }, () => '');
@@ -57,6 +56,9 @@ export default class Board {
         });
         const row3SettedPieces = (row3.map(_ => new Pawn(player_number)));
         return [row1SettedPieces, row2SettedPieces, row3SettedPieces];
+    }
+    getCurrentStatus() {
+        return this.status;
     }
     render() {
         const boardDom = document.getElementById('board');

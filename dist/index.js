@@ -1,8 +1,8 @@
-import { Shogi } from './models/game.js';
+import Game from './controllers/game.js';
 // 初期レンダリング時
 // 1. Welcomeメッセージを表示 & セレクトボックスでプレイヤーの先行後攻を決定
-const shogi = new Shogi();
-shogi.start();
+const shogi = new Game();
+shogi.welcome();
 // ゲーム開始時
 // 1. 先行プレイヤーの手番にする
 // 2. 駒を選択する
