@@ -1,30 +1,33 @@
-import { Piece, King, Rook, Bishop, Gold, Silver, Knight, Lance, Pawn } from './piece.js';
+import { BoardStatus, RowStatus } from '../types/boardTypes';
+
+import {
+  King, Rook, Bishop, Gold, Silver, Knight, Lance, Pawn
+} from './piece.js';
 
 export default class Board {
-  status: (string | Piece)[][];
+  private status: BoardStatus;
 
   constructor() {
-    this.status = this.setPiecesToInitialPosition();
+    this.status = Board.setPiecesToInitialPosition();
   };
 
-  setPiecesToInitialPosition() {
-    const rowsWithPlayer1 = (
-      this.setPiecesToInitialPositionPerPlayer(1).reverse());
-    const rowsWithPlayer2 = this.setPiecesToInitialPositionPerPlayer(2);
-    const initialStatus: (string | Piece)[][] = Array.from(
+  private static setPiecesToInitialPosition(): BoardStatus {
+    const initialStatus: BoardStatus = Array.from(
       {length: 9}, () => Array.from({length: 9}, () => ''));
+    const rowsWithPlayer1: BoardStatus = (
+      Board.setPiecesToInitPerPlayer(1).reverse());
+    const rowsWithPlayer2: BoardStatus = Board.setPiecesToInitPerPlayer(2);
     initialStatus.splice(6, 9, ...rowsWithPlayer1);
     initialStatus.splice(0, 3, ...rowsWithPlayer2);
-    console.log(initialStatus);
     return initialStatus;
   };
 
-  setPiecesToInitialPositionPerPlayer(player_number: number) {
+  private static setPiecesToInitPerPlayer(player_number: number): BoardStatus {
     const row1: string[] = Array.from({length: 9}, () => '');
     const row2: string[] = Array.from({length: 9}, () => '');
     const row3: string[] = Array.from({length: 9}, () => '');
 
-    const row1SettedPieces: (string | Piece)[] = row1.map((_, index) => {
+    const row1SettedPieces: RowStatus = row1.map((_, index) => {
       if (index === 0) return new Lance(player_number); 
       if (index === 1) return new Knight(player_number); 
       if (index === 2) return new Silver(player_number); 
@@ -36,7 +39,7 @@ export default class Board {
       if (index === 8) return new Lance(player_number); 
       return ''
     })
-    const row2SettedPieces: (string | Piece)[] = row2.map((cell, index) => {
+    const row2SettedPieces: RowStatus = row2.map((cell, index) => {
       if (player_number == 1) {
         if (index === 1) return new Bishop(player_number);
         if (index === 7) return new Rook(player_number);
@@ -47,11 +50,15 @@ export default class Board {
       }
       return cell 
     })
-    const row3SettedPieces: (string | Piece)[] = (
+    const row3SettedPieces: RowStatus = (
       row3.map(_ => new Pawn(player_number)));
 
     return [row1SettedPieces, row2SettedPieces, row3SettedPieces];
-  }
+  };
+
+  public getCurrentStatus(): BoardStatus {
+    return this.status;
+  };
 
   render(): void {
     const boardDom: HTMLElement | null = document.getElementById('board');
@@ -66,5 +73,5 @@ export default class Board {
       boardChildDom += '</div>';
     });
     boardDom.innerHTML = boardChildDom;
-  }
+  };
 }

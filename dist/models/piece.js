@@ -40,21 +40,21 @@ export class Silver extends Piece {
     constructor(player_number) {
         super(player_number);
         this.role = 'silever';
-        this.displayName = '銀';
+        this.displayName = this.role === 'silver' ? '銀' : '全';
     }
 }
 export class Knight extends Piece {
     constructor(player_number) {
         super(player_number);
         this.role = 'knight';
-        this.displayName = '桂';
+        this.displayName = this.role == 'knight' ? '桂' : '圭';
     }
 }
 export class Lance extends Piece {
     constructor(player_number) {
         super(player_number);
         this.role = 'lance';
-        this.displayName = '香';
+        this.displayName = this.role === 'lance' ? '香' : '杏';
     }
 }
 export class Pawn extends Piece {
