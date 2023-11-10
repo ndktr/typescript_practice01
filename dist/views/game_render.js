@@ -1,6 +1,7 @@
+import { handleClick } from "../events/board.js";
 export default class GameRender {
     constructor() {
-        return;
+        //
     }
     showCurrentBoard(currentBoardStatus) {
         const boardDom = document.getElementById('board');
@@ -17,7 +18,10 @@ export default class GameRender {
             boardChildDom += '</div>';
         });
         boardDom.innerHTML = boardChildDom;
+        // クリックイベントを登録
+        boardDom.addEventListener('click', handleClick);
     }
+    ;
     showWelcomeMessage(message) {
         while (true) {
             const answer = confirm(message);
@@ -26,4 +30,5 @@ export default class GameRender {
         }
         ;
     }
+    ;
 }

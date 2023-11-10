@@ -1,6 +1,4 @@
 import Game from './controllers/game.js';
-// 初期レンダリング時
-// 1. Welcomeメッセージを表示 & セレクトボックスでプレイヤーの先行後攻を決定
 const shogi = new Game();
 shogi.welcome();
 // ゲーム開始時

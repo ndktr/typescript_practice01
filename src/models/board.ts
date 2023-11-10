@@ -38,7 +38,7 @@ export default class Board {
       if (index === 7) return new Knight(player_number); 
       if (index === 8) return new Lance(player_number); 
       return ''
-    })
+    });
     const row2SettedPieces: RowStatus = row2.map((cell, index) => {
       if (player_number == 1) {
         if (index === 1) return new Bishop(player_number);
@@ -49,7 +49,7 @@ export default class Board {
         if (index === 7) return new Bishop(player_number);
       }
       return cell 
-    })
+    });
     const row3SettedPieces: RowStatus = (
       row3.map(_ => new Pawn(player_number)));
 
@@ -59,19 +59,4 @@ export default class Board {
   public getCurrentStatus(): BoardStatus {
     return this.status;
   };
-
-  render(): void {
-    const boardDom: HTMLElement | null = document.getElementById('board');
-    if (boardDom === null) return;
-    let boardChildDom: string = ''; 
-    this.status.forEach(row => {
-      boardChildDom += '<div class="row">';
-      boardChildDom += (row.map(piece => {
-        if (typeof piece === 'string') return `<div class="cell">${piece}</div>`;
-        return `<div class="cell"><span class="player${piece.player_number}">${piece.displayName}</span></div>`;
-      }).join(''));
-      boardChildDom += '</div>';
-    });
-    boardDom.innerHTML = boardChildDom;
-  };
-}
+};

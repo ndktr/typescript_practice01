@@ -1,8 +1,10 @@
 import { BoardStatus } from "../types/boardTypes";
 
+import { handleClick } from "../events/board.js";
+
 export default class GameRender {
   constructor() {
-    return;
+    //
   }
 
   showCurrentBoard(currentBoardStatus: BoardStatus): void {
@@ -18,6 +20,7 @@ export default class GameRender {
       boardChildDom += '</div>';
     });
     boardDom.innerHTML = boardChildDom;
+    boardDom.addEventListener('click', handleClick);
   };
 
   showWelcomeMessage(message: string): void {
