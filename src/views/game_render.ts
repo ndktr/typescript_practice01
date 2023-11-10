@@ -7,15 +7,27 @@ export default class GameRender {
     //
   }
 
+  showCurrentTurn(currentTurn: number): void {
+    const turnAreaDom: HTMLElement | null = document.getElementById('turn');
+    if (turnAreaDom === null) return;
+    const playerAreaDom: HTMLElement | null = turnAreaDom.querySelector('#player');
+    if (playerAreaDom === null) return;
+    // playerAreaDom.classList.add('')
+    playerAreaDom.innerText = `Player${currentTurn}`;
+  }
+
   showCurrentBoard(currentBoardStatus: BoardStatus): void {
     const boardDom: HTMLElement | null = document.getElementById('board');
     if (boardDom === null) return;
     let boardChildDom: string = ''; 
-    currentBoardStatus.forEach(row => {
+    currentBoardStatus.forEach((row, rowIndex) => {
       boardChildDom += '<div class="row">';
-      boardChildDom += (row.map(piece => {
-        if (typeof piece === 'string') return `<div class="cell">${piece}</div>`;
-        return `<div class="cell"><span class="player${piece.player_number}">${piece.displayName}</span></div>`;
+      boardChildDom += (row.map((piece, cellIndex) => {
+        let cellDom: string = `<div class="cell" data-row=${rowIndex} data-cell=${cellIndex}>`;
+        if (typeof piece != 'string') cellDom += (
+          `<span class="piece player${piece.player_number}">${piece.displayName}</span>`);
+        cellDom += '</div>'; 
+        return cellDom
       }).join(''));
       boardChildDom += '</div>';
     });
