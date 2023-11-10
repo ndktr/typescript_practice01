@@ -12,7 +12,6 @@ export default class GameRender {
     if (turnAreaDom === null) return;
     const playerAreaDom: HTMLElement | null = turnAreaDom.querySelector('#player');
     if (playerAreaDom === null) return;
-    // playerAreaDom.classList.add('')
     playerAreaDom.innerText = `Player${currentTurn}`;
   }
 
