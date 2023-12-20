@@ -50,6 +50,10 @@ export class Piece {
         left, leftForward, knightRightForward, knightLeftForward]
   }
 
+  public getName() {
+    return this.name
+  }
+
   public getCurrentPosition() {
     return this.current
   }
