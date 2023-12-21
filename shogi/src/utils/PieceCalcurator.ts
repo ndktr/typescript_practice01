@@ -1,3 +1,5 @@
+import { cloneDeep } from 'lodash'
+
 export class PieceCalcurator {
   static registry: Record<string, (currentPosition: number[], isForward: boolean) => number[]> = {
     'forward': PieceCalcurator.addOneToForward,
@@ -12,20 +14,24 @@ export class PieceCalcurator {
     'knightLeftForward': PieceCalcurator.addOneToKnightLeftForward
   }
   
-  static getNextPosition(direction: string, isForward: boolean, currentPosition: number[], step: number) {
-    const nextPosition: number[] = [...currentPosition]
-    const addOneToProperDirection = PieceCalcurator.registry[direction]
+  static getNextPositions(direction: string, isForward: boolean, currentPosition: number[], step: number): number[][] {
+    if (step === 0) return [[-1, -1]]
 
+    const nextPositions: number[][] = []
+
+    const addOneToProperDirection = PieceCalcurator.registry[direction]
     if (!addOneToProperDirection) console.error('registry do not have function') 
 
+    const nextPosition: number[] = cloneDeep(currentPosition)
     for (let i = 0; i < step; i++) {
       const [row, column] = addOneToProperDirection(nextPosition, isForward)
       if (!PieceCalcurator.isWithinBoard(row, column)) break
       nextPosition[0] = row
       nextPosition[1] = column
+      nextPositions.push(cloneDeep(nextPosition))
     }
 
-    return nextPosition
+    return nextPositions
   }
 
   static addOneToForward(currentPosition: number[], isForward: boolean): number[] {

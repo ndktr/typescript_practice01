@@ -1,0 +1,26 @@
+import { Piece } from './Piece.ts'
+
+export class Cell {
+  private row: number
+  private column: number
+  private piece: Piece|null
+  private hasPiece: boolean
+  private isActive: boolean
+
+  constructor(row: number, column: number) {
+    this.row = row
+    this.column = column
+    this.piece = null
+    this.hasPiece = false
+    this.isActive = false
+  }
+
+  public set(piece: Piece) {
+    this.piece = piece 
+    this.hasPiece = true
+  }
+
+  public activate() {
+    this.isActive = true
+  }
+}

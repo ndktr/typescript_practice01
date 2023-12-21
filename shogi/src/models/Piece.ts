@@ -6,48 +6,50 @@ export class Piece {
   private isForward: boolean
   private current: number[]
   private steps: number[]
+  private onBoard: boolean
 
   constructor(name: string, isForward: boolean, current: number[], steps: number[]) {
     this.name = name
     this.isForward = isForward
     this.current = current 
     this.steps = steps
+    this.onBoard = true
   }
   
-  public getNextPositions(): number[][] {
-    const forward: number[] = (
-      PieceCalcurator.getNextPosition(
+  public getAllNextPositions(): number[][][] {
+    const forward: number[][] = (
+      PieceCalcurator.getNextPositions(
         'forward', this.isForward, this.current, this.steps[0]))
-    const rightForward: number[] = (
-      PieceCalcurator.getNextPosition(
+    const rightForward: number[][] = (
+      PieceCalcurator.getNextPositions(
         'rightForward', this.isForward, this.current, this.steps[1]))
-    const right: number[] = (
-      PieceCalcurator.getNextPosition(
+    const right: number[][] = (
+      PieceCalcurator.getNextPositions(
         'right', this.isForward, this.current, this.steps[2]))
-    const rightBackward: number[] = (
-      PieceCalcurator.getNextPosition(
+    const rightBackward: number[][] = (
+      PieceCalcurator.getNextPositions(
         'rightBackward', this.isForward, this.current, this.steps[3]))
-    const backward: number[] = (
-      PieceCalcurator.getNextPosition(
+    const backward: number[][] = (
+      PieceCalcurator.getNextPositions(
         'backward', this.isForward, this.current, this.steps[4]))
-    const leftBackward: number[] = (
-      PieceCalcurator.getNextPosition(
+    const leftBackward: number[][] = (
+      PieceCalcurator.getNextPositions(
         'leftBackward', this.isForward, this.current, this.steps[5]))
-    const left: number[] = (
-      PieceCalcurator.getNextPosition(
+    const left: number[][] = (
+      PieceCalcurator.getNextPositions(
         'left', this.isForward, this.current, this.steps[6]))
-    const leftForward: number[] = (
-      PieceCalcurator.getNextPosition(
+    const leftForward: number[][] = (
+      PieceCalcurator.getNextPositions(
         'leftForward', this.isForward, this.current, this.steps[7]))
-    const knightRightForward: number[] = (
-      PieceCalcurator.getNextPosition(
+    const knightRightForward: number[][] = (
+      PieceCalcurator.getNextPositions(
         'knightRightForward', this.isForward, this.current, this.steps[8]))
-    const knightLeftForward: number[] = (
-      PieceCalcurator.getNextPosition(
+    const knightLeftForward: number[][] = (
+      PieceCalcurator.getNextPositions(
         'knightLeftForward', this.isForward, this.current, this.steps[9]))
-      return [
-        forward, rightForward, right, rightBackward, backward, leftBackward,
-        left, leftForward, knightRightForward, knightLeftForward]
+    return [
+      forward, rightForward, right, rightBackward, backward, leftBackward,
+      left, leftForward, knightRightForward, knightLeftForward]
   }
 
   public getName() {
@@ -56,6 +58,10 @@ export class Piece {
 
   public getCurrentPosition() {
     return this.current
+  }
+
+  public isDefeated() {
+    this.onBoard = false
   }
 }
 
