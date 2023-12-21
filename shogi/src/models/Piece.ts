@@ -65,15 +65,9 @@ export class Pawn extends Piece {
   }
 }
 
-export class Gold extends Piece {
+export class Lance extends Piece {
   constructor (name: string, isForward: boolean, current: number[]) {
-    super(name, isForward, current, [1, 1, 1, 0, 1, 0, 1, 1, 0, 0])
-  }
-}
-
-export class Silver extends Piece {
-  constructor (name: string, isForward: boolean, current: number[]) {
-    super(name, isForward, current, [1, 1, 0, 1, 0, 1, 0, 1, 0, 0])
+    super(name, isForward, current, [8, 0, 0, 0, 0, 0, 0, 0, 0, 0])
   }
 }
 
@@ -83,9 +77,21 @@ export class Knight extends Piece {
   }
 }
 
-export class Lance extends Piece {
+export class Silver extends Piece {
   constructor (name: string, isForward: boolean, current: number[]) {
-    super(name, isForward, current, [8, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+    super(name, isForward, current, [1, 1, 0, 1, 0, 1, 0, 1, 0, 0])
+  }
+}
+
+export class Gold extends Piece {
+  constructor (name: string, isForward: boolean, current: number[]) {
+    super(name, isForward, current, [1, 1, 1, 0, 1, 0, 1, 1, 0, 0])
+  }
+}
+
+export class Bishop extends Piece {
+  constructor (name: string, isForward: boolean, current: number[]) {
+    super(name, isForward, current, [0, 8, 0, 8, 0, 8, 0, 8, 0, 0])
   }
 }
 
@@ -95,8 +101,8 @@ export class Rook extends Piece {
   }
 }
 
-export class Bishop extends Piece {
+export class King extends Piece {
   constructor (name: string, isForward: boolean, current: number[]) {
-    super(name, isForward, current, [0, 8, 0, 8, 0, 8, 0, 8, 0, 0])
+    super(name, isForward, current, [1, 1, 1, 1, 1, 1, 1, 1, 0, 0])
   }
 }
