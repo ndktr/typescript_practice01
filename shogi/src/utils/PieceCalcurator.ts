@@ -15,12 +15,12 @@ export class PieceCalcurator {
   }
   
   static getNextPositions(direction: string, isForward: boolean, currentPosition: number[], step: number): number[][] {
-    if (step === 0) return [[-1, -1]]
+    if (step === 0) return [[0, 0]]
 
     const nextPositions: number[][] = []
 
     const addOneToProperDirection = PieceCalcurator.registry[direction]
-    if (!addOneToProperDirection) console.error('registry do not have function') 
+    if (!addOneToProperDirection) console.error('registry do not have such a function') 
 
     const nextPosition: number[] = cloneDeep(currentPosition)
     for (let i = 0; i < step; i++) {
@@ -31,7 +31,7 @@ export class PieceCalcurator {
       nextPositions.push(cloneDeep(nextPosition))
     }
 
-    return nextPositions
+    return (nextPositions.length !== 0) ? nextPositions : [[0, 0]] 
   }
 
   static addOneToForward(currentPosition: number[], isForward: boolean): number[] {
