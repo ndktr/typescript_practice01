@@ -20,7 +20,20 @@ export class Cell {
     this.hasPiece = true
   }
 
+  public remove() {
+    this.piece = null
+    this.hasPiece = false
+  }
+
   public activate() {
     this.isActive = true
+  }
+
+  public deactivate() {
+    this.isActive = false
+  }
+
+  public checkIsActive(): boolean {
+    return this.isActive
   }
 }

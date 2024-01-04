@@ -1,10 +1,15 @@
-import { PieceCalcurator } from "../utils/PieceCalcurator.ts"
+import { cloneDeep } from 'lodash'
+
+import { PieceCalcurator } from '../utils/PieceCalcurator.ts'
+import { Board } from './Board.ts'
+import { Cell } from './Cell.ts'
 
 
 export class Piece {
   private name: string
   private isForward: boolean
   private current: number[]
+  private previous: number[]
   private steps: number[]
   private onBoard: boolean
 
@@ -12,6 +17,7 @@ export class Piece {
     this.name = name
     this.isForward = isForward
     this.current = current 
+    this.previous = current 
     this.steps = steps
     this.onBoard = true
   }
@@ -60,8 +66,17 @@ export class Piece {
     return this.current
   }
 
+  public getPreviousPosition() {
+    return this.previous
+  }
+
   public isDefeated() {
     this.onBoard = false
+  }
+
+  public move(row: number, column: number) {
+    this.previous = cloneDeep(this.current)
+    this.current = [row, column] 
   }
 }
 

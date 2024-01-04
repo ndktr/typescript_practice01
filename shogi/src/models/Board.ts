@@ -29,6 +29,23 @@ export class Board {
     cell.set(piece)
   }
 
+  public update(piece: Piece): void {
+    const currentPosition: number[] = piece.getCurrentPosition()
+    const previousPosition: number[] = piece.getPreviousPosition()
+    const row: number = currentPosition[0]
+    const column: number = currentPosition[1]
+    const previousRow: number = previousPosition[0]
+    const previousColumn: number = previousPosition[1]
+    const prevoiusCell: Cell = this.status[previousRow][previousColumn]
+    const cell: Cell = this.status[row][column]
+    if (cell.checkIsActive()) {
+      cell.set(piece)
+      prevoiusCell.remove()
+    } else {
+      console.error('Select invalid cell')
+    }
+  }
+
   public loadNextPositions(allNextPositions: number[][][]) {
     allNextPositions.forEach(eachNextPositions => {
       eachNextPositions.forEach(nextPosition => {
