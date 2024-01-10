@@ -92,6 +92,14 @@ export class Board {
     }
   }
 
+  public activateCell(position: number[]) {
+    const row: number = position[0]
+    const column: number = position[1]
+    const targetCell: Cell = this.status[row][column]
+    if (targetCell.checkHasPiece()) return
+    targetCell.activate()
+  }
+
   public loadNextPositions(allNextPositions: number[][][]) {
     allNextPositions.forEach(eachNextPositions => {
       eachNextPositions.forEach(nextPosition => {
