@@ -1,44 +1,34 @@
 import './style.css'
 import { Board } from './models/Board.ts'
-import {
-  Piece, Pawn, Lance, Knight, Silver, Gold, Bishop, Rook, King
-} from './models/Piece.ts'
+import { Piece } from './models/Piece.ts'
 
-const selectPiece = (piece: Piece): number[][][] => {
+// 選択した駒の移動できるマスを計算する
+const suggestAllNextPositions = (piece: Piece): number[][][] => {
   const allNextPositions = piece.getAllNextPositions()
   return allNextPositions
 }
 
-const pawn: Piece = new Pawn('P', false, [6, 0])
-const lance: Piece = new Lance('L', true, [0, 8])
-const knight: Piece = new Knight('KN', false, [8, 7])
-const silver: Piece = new Silver('S', true, [0, 2])
-const gold: Piece = new Gold('G', false, [8, 3])
-const bishop: Piece = new Bishop('B', false, [7, 1])
-const rook: Piece = new Rook('R', true, [1, 1])
-const king: Piece = new King('K', false, [8, 4])
-
-const board: Board = new Board()
-board.set(pawn)
-board.set(lance)
-board.set(knight)
-board.set(silver)
-board.set(gold)
-board.set(rook)
-board.set(bishop)
-board.set(king)
-
-const movePiece = (piece: Piece, position: number[]) => {
+// 選択した駒を動かす
+const movePiece = (piece: Piece, nextPosition: number[]) => {
   // 1 block to move
-  const targetPiece = piece 
-  const row: number = position[0]
-  const column: number = position[1]
-  const allNextPositions: number[][][] = selectPiece(targetPiece)
+  const row: number = nextPosition[0]
+  const column: number = nextPosition[1]
+  const allNextPositions: number[][][] = suggestAllNextPositions(piece)
   board.loadNextPositions(allNextPositions)
-  targetPiece.move(row, column)
-  board.update(targetPiece)
+  piece.move(row, column)
+  return piece
 }
 
-movePiece(bishop, [6, 0])
-movePiece(silver, [1, 3])
-console.log(board.getStatus())
+const board: Board = new Board()
+const currentStatus = board.getStatus()
+
+// 1. 動かす駒を選択する
+const piece: Piece|null = currentStatus[0][2].getPiece()
+// 2. 選択した駒の移動できるマスを計算する
+const allNextPositions: number[][][] = suggestAllNextPositions(piece)
+// 3. 選択した駒を動かす
+
+
+// // if (piece !== null) movePiece(piece, [2, 2])
+// if (piece !== null) board.update(movePiece(piece, [1, 2]))
+// console.log(board.getStatus())
