@@ -100,6 +100,14 @@ export class Board {
     targetCell.activate()
   }
 
+  deactivateAllCell() {
+    this.status.forEach((row: Cell[]) => {
+      row.forEach((cell: Cell) => {
+        cell.deactivate()
+      }) 
+    })
+  }
+
   public loadNextPositions(allNextPositions: number[][][]) {
     allNextPositions.forEach(eachNextPositions => {
       eachNextPositions.forEach(nextPosition => {

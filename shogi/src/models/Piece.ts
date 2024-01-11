@@ -1,8 +1,6 @@
 import { cloneDeep } from 'lodash'
 
 import { PieceCalcurator } from '../utils/PieceCalcurator.ts'
-import { Board } from './Board.ts'
-import { Cell } from './Cell.ts'
 
 
 export class Piece {
