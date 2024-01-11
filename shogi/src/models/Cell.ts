@@ -15,6 +15,11 @@ export class Cell {
     this.isActive = false
   }
 
+  public getPiece(): Piece|null {
+    if (this.checkHasPiece()) return this.piece
+    return null
+  }
+
   public set(piece: Piece) {
     this.piece = piece 
     this.hasPiece = true
@@ -35,5 +40,9 @@ export class Cell {
 
   public checkIsActive(): boolean {
     return this.isActive
+  }
+
+  public checkHasPiece(): boolean {
+    return this.hasPiece
   }
 }

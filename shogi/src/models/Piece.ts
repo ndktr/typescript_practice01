@@ -1,8 +1,6 @@
 import { cloneDeep } from 'lodash'
 
 import { PieceCalcurator } from '../utils/PieceCalcurator.ts'
-import { Board } from './Board.ts'
-import { Cell } from './Cell.ts'
 
 
 export class Piece {
@@ -68,10 +66,6 @@ export class Piece {
 
   public getPreviousPosition() {
     return this.previous
-  }
-
-  public isDefeated() {
-    this.onBoard = false
   }
 
   public move(row: number, column: number) {
