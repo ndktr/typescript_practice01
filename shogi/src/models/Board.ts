@@ -96,7 +96,10 @@ export class Board {
     const row: number = position[0]
     const column: number = position[1]
     const targetCell: Cell = this.status[row][column]
-    if (targetCell.checkHasPiece()) return
+    if (targetCell.checkHasPiece()) {
+      // pieceが相手の場合はactivate()する
+      return
+    } 
     targetCell.activate()
   }
 
@@ -105,18 +108,6 @@ export class Board {
       row.forEach((cell: Cell) => {
         cell.deactivate()
       }) 
-    })
-  }
-
-  public loadNextPositions(allNextPositions: number[][][]) {
-    allNextPositions.forEach(eachNextPositions => {
-      eachNextPositions.forEach(nextPosition => {
-        const row: number = nextPosition[0]
-        const column: number = nextPosition[1]
-        const currentCell = this.status[row][column]
-        if (currentCell.checkHasPiece()) return 
-        currentCell.activate()
-      })
     })
   }
 }

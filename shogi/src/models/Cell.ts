@@ -20,7 +20,6 @@ export class Cell {
     return null
   }
 
-
   public set(piece: Piece) {
     this.piece = piece 
     this.hasPiece = true

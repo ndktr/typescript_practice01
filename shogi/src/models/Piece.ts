@@ -68,10 +68,6 @@ export class Piece {
     return this.previous
   }
 
-  public isDefeated() {
-    this.onBoard = false
-  }
-
   public move(row: number, column: number) {
     this.previous = cloneDeep(this.current)
     this.current = [row, column] 
