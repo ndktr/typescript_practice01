@@ -5,14 +5,16 @@ import { PieceCalcurator } from '../utils/PieceCalcurator.ts'
 
 export class Piece {
   private name: string
+  private belongTo: number 
   private isForward: boolean
   private current: number[]
   private previous: number[]
   private steps: number[]
   private onBoard: boolean
 
-  constructor(name: string, isForward: boolean, current: number[], steps: number[]) {
+  constructor(name: string, belongTo: number, isForward: boolean, current: number[], steps: number[]) {
     this.name = name
+    this.belongTo = belongTo
     this.isForward = isForward
     this.current = current 
     this.previous = current 
@@ -68,56 +70,60 @@ export class Piece {
     return this.previous
   }
 
+  public getBelongTo() {
+    return this.belongTo
+  }
+
   public move(row: number, column: number) {
-    this.previous = cloneDeep(this.current)
+    this.previous = cloneDeep(this.getCurrentPosition())
     this.current = [row, column] 
   }
 }
 
 export class Pawn extends Piece {
-  constructor (name: string, isForward: boolean, current: number[]) {
-    super(name, isForward, current, [1, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+  constructor (name: string, belongTo: number, isForward: boolean, current: number[]) {
+    super(name, belongTo, isForward, current, [1, 0, 0, 0, 0, 0, 0, 0, 0, 0])
   }
 }
 
 export class Lance extends Piece {
-  constructor (name: string, isForward: boolean, current: number[]) {
-    super(name, isForward, current, [8, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+  constructor (name: string, belongTo: number, isForward: boolean, current: number[]) {
+    super(name, belongTo, isForward, current, [8, 0, 0, 0, 0, 0, 0, 0, 0, 0])
   }
 }
 
 export class Knight extends Piece {
-  constructor (name: string, isForward: boolean, current: number[]) {
-    super(name, isForward, current, [0, 0, 0, 0, 0, 0, 0, 0, 1, 1])
+  constructor (name: string, belongTo: number, isForward: boolean, current: number[]) {
+    super(name, belongTo, isForward, current, [0, 0, 0, 0, 0, 0, 0, 0, 1, 1])
   }
 }
 
 export class Silver extends Piece {
-  constructor (name: string, isForward: boolean, current: number[]) {
-    super(name, isForward, current, [1, 1, 0, 1, 0, 1, 0, 1, 0, 0])
+  constructor (name: string, belongTo: number, isForward: boolean, current: number[]) {
+    super(name, belongTo, isForward, current, [1, 1, 0, 1, 0, 1, 0, 1, 0, 0])
   }
 }
 
 export class Gold extends Piece {
-  constructor (name: string, isForward: boolean, current: number[]) {
-    super(name, isForward, current, [1, 1, 1, 0, 1, 0, 1, 1, 0, 0])
+  constructor (name: string, belongTo: number, isForward: boolean, current: number[]) {
+    super(name, belongTo, isForward, current, [1, 1, 1, 0, 1, 0, 1, 1, 0, 0])
   }
 }
 
 export class Bishop extends Piece {
-  constructor (name: string, isForward: boolean, current: number[]) {
-    super(name, isForward, current, [0, 8, 0, 8, 0, 8, 0, 8, 0, 0])
+  constructor (name: string, belongTo: number, isForward: boolean, current: number[]) {
+    super(name, belongTo, isForward, current, [0, 8, 0, 8, 0, 8, 0, 8, 0, 0])
   }
 }
 
 export class Rook extends Piece {
-  constructor (name: string, isForward: boolean, current: number[]) {
-    super(name, isForward, current, [8, 0, 8, 0, 8, 0, 8, 0, 0, 0])
+  constructor (name: string, belongTo: number, isForward: boolean, current: number[]) {
+    super(name, belongTo, isForward, current, [8, 0, 8, 0, 8, 0, 8, 0, 0, 0])
   }
 }
 
 export class King extends Piece {
-  constructor (name: string, isForward: boolean, current: number[]) {
-    super(name, isForward, current, [1, 1, 1, 1, 1, 1, 1, 1, 0, 0])
+  constructor (name: string, belongTo: number, isForward: boolean, current: number[]) {
+    super(name, belongTo, isForward, current, [1, 1, 1, 1, 1, 1, 1, 1, 0, 0])
   }
 }

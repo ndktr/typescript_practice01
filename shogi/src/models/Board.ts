@@ -5,62 +5,69 @@ import { Piece, Pawn, King, Gold, Silver, Knight, Lance, Rook, Bishop } from './
 
 export class Board {
   private status: Cell[][]
+  private outBoardPieces: Piece[]
 
   constructor() {
     this.status =  (
       Array.from({length:9}).map(
         (_, i) => Array.from({length:9}).map(
           (_, j) => new Cell(i, j))))
+
+    this.outBoardPieces = [] 
+
+    this.set(new Lance('香', 1, true, [0, 0]))
+    this.set(new Knight('桂', 1, true, [0, 1]))
+    this.set(new Silver('銀', 1, true, [5, 2]))
+    this.set(new Gold('金', 1, true, [0, 3]))
+    this.set(new King('王', 1, true, [0, 4]))
+    this.set(new Gold('金', 1, true, [0, 5]))
+    this.set(new Silver('銀', 1, true, [0, 6]))
+    this.set(new Knight('桂', 1, true, [0, 7]))
+    this.set(new Lance('香', 1, true, [0, 8]))
+
+    this.set(new Rook('飛', 1, true, [1, 1]))
+    this.set(new Bishop('角', 1, true, [1, 7]))
     
-    this.set(new Pawn('歩', true, [2, 0]))
-    this.set(new Pawn('歩', true, [2, 1]))
-    this.set(new Pawn('歩', true, [2, 2]))
-    this.set(new Pawn('歩', true, [2, 3]))
-    this.set(new Pawn('歩', true, [2, 4]))
-    this.set(new Pawn('歩', true, [2, 5]))
-    this.set(new Pawn('歩', true, [2, 6]))
-    this.set(new Pawn('歩', true, [2, 7]))
-    this.set(new Pawn('歩', true, [2, 8]))
+    this.set(new Pawn('歩', 1, true, [2, 0]))
+    this.set(new Pawn('歩', 1, true, [2, 1]))
+    this.set(new Pawn('歩', 1, true, [2, 2]))
+    this.set(new Pawn('歩', 1, true, [2, 3]))
+    this.set(new Pawn('歩', 1, true, [2, 4]))
+    this.set(new Pawn('歩', 1, true, [2, 5]))
+    this.set(new Pawn('歩', 1, true, [2, 6]))
+    this.set(new Pawn('歩', 1, true, [2, 7]))
+    this.set(new Pawn('歩', 1, true, [2, 8]))
 
-    this.set(new Pawn('歩', false, [6, 0]))
-    this.set(new Pawn('歩', false, [6, 1]))
-    this.set(new Pawn('歩', false, [6, 2]))
-    this.set(new Pawn('歩', false, [6, 3]))
-    this.set(new Pawn('歩', false, [6, 4]))
-    this.set(new Pawn('歩', false, [6, 5]))
-    this.set(new Pawn('歩', false, [6, 6]))
-    this.set(new Pawn('歩', false, [6, 7]))
-    this.set(new Pawn('歩', false, [6, 8]))
+    this.set(new Lance('香', 2, false, [8, 0]))
+    this.set(new Knight('桂', 2, false, [8, 1]))
+    this.set(new Silver('銀', 2, false, [8, 2]))
+    this.set(new Gold('金', 2, false, [8, 3]))
+    this.set(new King('王', 2, false, [8, 4]))
+    this.set(new Gold('金', 2, false, [8, 5]))
+    this.set(new Silver('銀', 2, false, [8, 6]))
+    this.set(new Knight('桂', 2, false, [8, 7]))
+    this.set(new Lance('香', 2, false, [8, 8]))
 
-    this.set(new Rook('飛', true, [1, 1]))
-    this.set(new Bishop('角', true, [1, 7]))
+    this.set(new Bishop('角', 2, false, [7, 1]))
+    this.set(new Rook('飛', 2, false, [7, 7]))
 
-    this.set(new Rook('角', false, [7, 1]))
-    this.set(new Bishop('飛', false, [7, 7]))
-
-    this.set(new Lance('香', true, [0, 0]))
-    this.set(new Knight('桂', true, [0, 1]))
-    this.set(new Silver('銀', true, [0, 2]))
-    this.set(new Gold('金', true, [0, 3]))
-    this.set(new King('王', true, [0, 4]))
-    this.set(new Gold('金', true, [0, 5]))
-    this.set(new Silver('銀', true, [0, 6]))
-    this.set(new Knight('桂', true, [0, 7]))
-    this.set(new Lance('香', true, [0, 8]))
-
-    this.set(new Lance('香', true, [8, 0]))
-    this.set(new Knight('桂', true, [8, 1]))
-    this.set(new Silver('銀', true, [8, 2]))
-    this.set(new Gold('金', true, [8, 3]))
-    this.set(new King('王', true, [8, 4]))
-    this.set(new Gold('金', true, [8, 5]))
-    this.set(new Silver('銀', true, [8, 6]))
-    this.set(new Knight('桂', true, [8, 7]))
-    this.set(new Lance('香', true, [8, 8]))
+    this.set(new Pawn('歩', 2, false, [6, 0]))
+    this.set(new Pawn('歩', 2, false, [6, 1]))
+    this.set(new Pawn('歩', 2, false, [6, 2]))
+    this.set(new Pawn('歩', 2, false, [6, 3]))
+    this.set(new Pawn('歩', 2, false, [6, 4]))
+    this.set(new Pawn('歩', 2, false, [6, 5]))
+    this.set(new Pawn('歩', 2, false, [6, 6]))
+    this.set(new Pawn('歩', 2, false, [6, 7]))
+    this.set(new Pawn('歩', 2, false, [6, 8]))
   }
 
   public getStatus() {
     return cloneDeep(this.status)
+  }
+
+  public getCell(row: number, column: number) {
+    return this.status[row][column]
   }
 
   public setStatus(status: Cell[][]) {
@@ -80,11 +87,14 @@ export class Board {
     const previousPosition: number[] = piece.getPreviousPosition()
     const row: number = currentPosition[0]
     const column: number = currentPosition[1]
+    const cell: Cell = this.status[row][column]
     const previousRow: number = previousPosition[0]
     const previousColumn: number = previousPosition[1]
     const prevoiusCell: Cell = this.status[previousRow][previousColumn]
-    const cell: Cell = this.status[row][column]
     if (cell.checkIsActive()) {
+      if (cell.checkHasPiece()) {
+        // do something
+      }
       cell.set(piece)
       prevoiusCell.remove()
     } else {
@@ -92,14 +102,11 @@ export class Board {
     }
   }
 
-  public activateCell(position: number[]) {
-    const row: number = position[0]
-    const column: number = position[1]
+  public activateCell(row: number, column: number, belongTo: number): void {
     const targetCell: Cell = this.status[row][column]
-    if (targetCell.checkHasPiece()) {
-      // pieceが相手の場合はactivate()する
+    if (targetCell.checkHasPiece() && targetCell.checkSameBelongTo(belongTo)) {
       return
-    } 
+    }
     targetCell.activate()
   }
 

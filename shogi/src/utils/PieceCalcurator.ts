@@ -15,7 +15,7 @@ export class PieceCalcurator {
   }
   
   static getNextPositions(direction: string, isForward: boolean, currentPosition: number[], step: number): number[][] {
-    if (step === 0) return [[0, 0]]
+    if (step === 0) return [[-1, -1]]
 
     const nextPositions: number[][] = []
 
@@ -31,7 +31,7 @@ export class PieceCalcurator {
       nextPositions.push(cloneDeep(nextPosition))
     }
 
-    return (nextPositions.length !== 0) ? nextPositions : [[0, 0]] 
+    return (nextPositions.length !== 0) ? nextPositions : [[-1, -1]] 
   }
 
   static addOneToForward(currentPosition: number[], isForward: boolean): number[] {

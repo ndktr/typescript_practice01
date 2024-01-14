@@ -15,9 +15,16 @@ export class Cell {
     this.isActive = false
   }
 
-  public getPiece(): Piece|null {
-    if (this.checkHasPiece()) return this.piece
-    return null
+  public getPiece(): Piece {
+    return this.piece
+  }
+
+  public getRow(): number {
+    return this.row
+  }
+
+  public getColumn(): number {
+    return this.column
   }
 
   public set(piece: Piece) {
@@ -44,5 +51,12 @@ export class Cell {
 
   public checkHasPiece(): boolean {
     return this.hasPiece
+  }
+
+  public checkSameBelongTo(belongTo: number): boolean {
+    const piece: Piece = this.getPiece()
+    if (piece === null) return false
+    if (belongTo !== piece.getBelongTo()) return false 
+    return true
   }
 }
