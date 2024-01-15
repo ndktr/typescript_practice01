@@ -70,10 +70,6 @@ export class Board {
     return this.status[row][column]
   }
 
-  public setStatus(status: Cell[][]) {
-    this.status = cloneDeep(status)
-  }
-
   public set(piece: Piece): void {
     const currentPosition: number[] = piece.getCurrentPosition()
     const row: number = currentPosition[0]
@@ -91,8 +87,8 @@ export class Board {
     const previousRow: number = previousPosition[0]
     const previousColumn: number = previousPosition[1]
     const prevoiusCell: Cell = this.status[previousRow][previousColumn]
-    if (cell.checkIsActive()) {
-      if (cell.checkHasPiece()) {
+    if (cell.isActive()) {
+      if (cell.hasPiece()) {
         // do something
       }
       cell.set(piece)
@@ -102,19 +98,41 @@ export class Board {
     }
   }
 
-  public activateCell(row: number, column: number, belongTo: number): void {
-    const targetCell: Cell = this.status[row][column]
-    if (targetCell.checkHasPiece() && targetCell.checkSameBelongTo(belongTo)) {
-      return
-    }
-    targetCell.activate()
-  }
-
   deactivateAllCell() {
     this.status.forEach((row: Cell[]) => {
       row.forEach((cell: Cell) => {
         cell.deactivate()
       }) 
     })
+  }
+
+  public highlightAllNextPositions = (piece: Piece): void => {
+    const currentPiece: Piece = piece
+    const currentPieceBelongTo: number = currentPiece.getBelongTo()
+    const allNextPositions: number[][][] = this.suggestAllNextPositions(currentPiece)
+    console.log(allNextPositions)
+
+    this.deactivateAllCell()
+
+    allNextPositions.forEach(eachDirection => {
+      for (const currentPosition of eachDirection) {
+        const row: number = currentPosition[0]
+        const column: number = currentPosition[1]
+        if (row === -1 || column === -1) break
+
+        const cell: Cell = this.getCell(row, column)
+        if (cell.hasPiece() && !cell.isEnemy(currentPieceBelongTo)) break
+        if (cell.hasPiece()) {
+          cell.activate()
+          break
+        }
+        cell.activate()
+      }
+    })
+  }
+
+  public suggestAllNextPositions= (piece: Piece): number[][][] => {
+    const allNextPositions = piece.getAllNextPositions()
+    return allNextPositions
   }
 }

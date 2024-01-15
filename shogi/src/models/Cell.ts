@@ -4,18 +4,16 @@ export class Cell {
   private row: number
   private column: number
   private piece: Piece|null
-  private hasPiece: boolean
-  private isActive: boolean
+  private active: boolean
 
   constructor(row: number, column: number) {
     this.row = row
     this.column = column
     this.piece = null
-    this.hasPiece = false
-    this.isActive = false
+    this.active = false
   }
 
-  public getPiece(): Piece {
+  public getPiece(): Piece|null {
     return this.piece
   }
 
@@ -29,34 +27,31 @@ export class Cell {
 
   public set(piece: Piece) {
     this.piece = piece 
-    this.hasPiece = true
   }
 
   public remove() {
     this.piece = null
-    this.hasPiece = false
   }
 
   public activate() {
-    this.isActive = true
+    this.active = true
   }
 
   public deactivate() {
-    this.isActive = false
+    this.active = false
   }
 
-  public checkIsActive(): boolean {
-    return this.isActive
+  public isActive(): boolean {
+    return this.active
   }
 
-  public checkHasPiece(): boolean {
-    return this.hasPiece
+  public hasPiece(): boolean {
+    return this.piece !== null
   }
 
-  public checkSameBelongTo(belongTo: number): boolean {
-    const piece: Piece = this.getPiece()
-    if (piece === null) return false
-    if (belongTo !== piece.getBelongTo()) return false 
-    return true
+  public isEnemy(belongTo: number): boolean {
+    const piece: Piece = this.getPiece() as Piece
+    if (belongTo !== piece.getBelongTo()) return true 
+    return false 
   }
 }
