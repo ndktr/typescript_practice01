@@ -110,7 +110,6 @@ export class Board {
     const currentPiece: Piece = piece
     const currentPieceBelongTo: number = currentPiece.getBelongTo()
     const allNextPositions: number[][][] = this.suggestAllNextPositions(currentPiece)
-    console.log(allNextPositions)
 
     this.deactivateAllCell()
 
