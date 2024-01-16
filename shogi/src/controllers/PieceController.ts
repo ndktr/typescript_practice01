@@ -28,7 +28,7 @@ export class PieceController {
     const belongedPiece: Piece|null = moveToCell.hasPiece() ? moveToCell.getPiece() : null 
     if (belongedPiece !== null && belongedPiece.isOwn(turn.getTurn())) return
     
-    selectedPiece.move(moveToCell.getRow(), moveToCell.getColumn())
+    selectedPiece.setNextPosition(moveToCell.getRow(), moveToCell.getColumn())
     board.update(selectedPiece)
     board.deactivateAllCell()
     turn.changeTurn()

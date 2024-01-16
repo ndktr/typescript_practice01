@@ -1,7 +1,9 @@
 import { cloneDeep } from 'lodash'
 
 import { Cell } from './Cell.ts'
-import { Piece, Pawn, King, Gold, Silver, Knight, Lance, Rook, Bishop } from './Piece.ts'
+import { 
+  Piece, Pawn, King, Gold, Silver, Knight, Lance, Rook, Bishop 
+} from './Piece.ts'
 
 export class Board {
   private status: Cell[][]
@@ -79,23 +81,28 @@ export class Board {
   }
 
   public update(piece: Piece): void {
-    const currentPosition: number[] = piece.getCurrentPosition()
+    const moveToPosition: number[] = piece.getCurrentPosition()
+    const moveToRow: number = moveToPosition[0]
+    const moveToColumn: number = moveToPosition[1]
+    const moveToCell: Cell = this.getCell(moveToRow, moveToColumn)
+
     const previousPosition: number[] = piece.getPreviousPosition()
-    const row: number = currentPosition[0]
-    const column: number = currentPosition[1]
-    const cell: Cell = this.status[row][column]
     const previousRow: number = previousPosition[0]
     const previousColumn: number = previousPosition[1]
-    const prevoiusCell: Cell = this.status[previousRow][previousColumn]
-    if (cell.isActive()) {
-      if (cell.hasPiece()) {
-        // do something
-      }
-      cell.set(piece)
-      prevoiusCell.remove()
-    } else {
-      console.error('Select invalid cell')
+    const prevoiusCell: Cell = this.getCell(previousRow, previousColumn)
+
+    if (!moveToCell.isActive()) return
+
+    if (moveToCell.hasPiece()) {
+      // TODO: ここで駒を取る処理を書く
+      const takenPiece: Piece = moveToCell.getPiece() as Piece
+      console.log(takenPiece)
+      // TODO: 成るかどうかの処理を書く 
+      // piece.promoteIfOk()
     }
+
+    moveToCell.set(piece)
+    prevoiusCell.remove()
   }
 
   public highlightAllNextPositions = (selectedPiece: Piece): void => {

@@ -1,7 +1,7 @@
 import { cloneDeep } from 'lodash'
 
 import { Turn } from '../models/Turn'
-import { PieceCalcurator } from '../utils/PieceCalcurator.ts'
+import { PieceDirectionCalcurator } from '../services/PieceDirectionCalcurator.ts'
 
 
 export class Piece {
@@ -25,34 +25,34 @@ export class Piece {
   
   public getAllNextPositions(): number[][][] {
     const forward: number[][] = (
-      PieceCalcurator.getNextPositions(
+      PieceDirectionCalcurator.getNextPositions(
         'forward', this.isForward, this.current, this.steps[0]))
     const rightForward: number[][] = (
-      PieceCalcurator.getNextPositions(
+      PieceDirectionCalcurator.getNextPositions(
         'rightForward', this.isForward, this.current, this.steps[1]))
     const right: number[][] = (
-      PieceCalcurator.getNextPositions(
+      PieceDirectionCalcurator.getNextPositions(
         'right', this.isForward, this.current, this.steps[2]))
     const rightBackward: number[][] = (
-      PieceCalcurator.getNextPositions(
+      PieceDirectionCalcurator.getNextPositions(
         'rightBackward', this.isForward, this.current, this.steps[3]))
     const backward: number[][] = (
-      PieceCalcurator.getNextPositions(
+      PieceDirectionCalcurator.getNextPositions(
         'backward', this.isForward, this.current, this.steps[4]))
     const leftBackward: number[][] = (
-      PieceCalcurator.getNextPositions(
+      PieceDirectionCalcurator.getNextPositions(
         'leftBackward', this.isForward, this.current, this.steps[5]))
     const left: number[][] = (
-      PieceCalcurator.getNextPositions(
+      PieceDirectionCalcurator.getNextPositions(
         'left', this.isForward, this.current, this.steps[6]))
     const leftForward: number[][] = (
-      PieceCalcurator.getNextPositions(
+      PieceDirectionCalcurator.getNextPositions(
         'leftForward', this.isForward, this.current, this.steps[7]))
     const knightRightForward: number[][] = (
-      PieceCalcurator.getNextPositions(
+      PieceDirectionCalcurator.getNextPositions(
         'knightRightForward', this.isForward, this.current, this.steps[8]))
     const knightLeftForward: number[][] = (
-      PieceCalcurator.getNextPositions(
+      PieceDirectionCalcurator.getNextPositions(
         'knightLeftForward', this.isForward, this.current, this.steps[9]))
     return [
       forward, rightForward, right, rightBackward, backward, leftBackward,
@@ -85,7 +85,7 @@ export class Piece {
     return true
   }
 
-  public move(row: number, column: number) {
+  public setNextPosition(row: number, column: number) {
     this.previous = cloneDeep(this.getCurrentPosition())
     this.current = [row, column] 
   }

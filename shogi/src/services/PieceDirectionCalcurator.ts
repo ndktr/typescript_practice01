@@ -1,17 +1,17 @@
 import { cloneDeep } from 'lodash'
 
-export class PieceCalcurator {
+export class PieceDirectionCalcurator {
   static registry: Record<string, (currentPosition: number[], isForward: boolean) => number[]> = {
-    'forward': PieceCalcurator.addOneToForward,
-    'rightForward': PieceCalcurator.addOneToRightForward,
-    'right': PieceCalcurator.addOneToRight,
-    'rightBackward': PieceCalcurator.addOneToRightBackward,
-    'backward': PieceCalcurator.addOneToBackward,
-    'leftBackward': PieceCalcurator.addOneToLeftBackward,
-    'left': PieceCalcurator.addOneToLeft,
-    'leftForward': PieceCalcurator.addOneToLeftForward,
-    'knightRightForward': PieceCalcurator.addOneToKnightRightForward,
-    'knightLeftForward': PieceCalcurator.addOneToKnightLeftForward
+    'forward': PieceDirectionCalcurator.addOneToForward,
+    'rightForward': PieceDirectionCalcurator.addOneToRightForward,
+    'right': PieceDirectionCalcurator.addOneToRight,
+    'rightBackward': PieceDirectionCalcurator.addOneToRightBackward,
+    'backward': PieceDirectionCalcurator.addOneToBackward,
+    'leftBackward': PieceDirectionCalcurator.addOneToLeftBackward,
+    'left': PieceDirectionCalcurator.addOneToLeft,
+    'leftForward': PieceDirectionCalcurator.addOneToLeftForward,
+    'knightRightForward': PieceDirectionCalcurator.addOneToKnightRightForward,
+    'knightLeftForward': PieceDirectionCalcurator.addOneToKnightLeftForward
   }
   
   static getNextPositions(direction: string, isForward: boolean, currentPosition: number[], step: number): number[][] {
@@ -19,13 +19,13 @@ export class PieceCalcurator {
 
     const nextPositions: number[][] = []
 
-    const addOneToProperDirection = PieceCalcurator.registry[direction]
+    const addOneToProperDirection = PieceDirectionCalcurator.registry[direction]
     if (!addOneToProperDirection) console.error('registry do not have such a function') 
 
     const nextPosition: number[] = cloneDeep(currentPosition)
     for (let i = 0; i < step; i++) {
       const [row, column] = addOneToProperDirection(nextPosition, isForward)
-      if (!PieceCalcurator.isWithinBoard(row, column)) break
+      if (!PieceDirectionCalcurator.isWithinBoard(row, column)) break
       nextPosition[0] = row
       nextPosition[1] = column
       nextPositions.push(cloneDeep(nextPosition))
