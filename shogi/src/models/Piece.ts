@@ -1,5 +1,6 @@
 import { cloneDeep } from 'lodash'
 
+import { Turn } from '../models/Turn'
 import { PieceCalcurator } from '../utils/PieceCalcurator.ts'
 
 
@@ -72,6 +73,11 @@ export class Piece {
 
   public getBelongTo() {
     return this.belongTo
+  }
+
+  public isOwn(currentTurn: number) {
+    if (this.getBelongTo() !== currentTurn) return false
+    return true
   }
 
   public move(row: number, column: number) {

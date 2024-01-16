@@ -98,18 +98,9 @@ export class Board {
     }
   }
 
-  deactivateAllCell() {
-    this.status.forEach((row: Cell[]) => {
-      row.forEach((cell: Cell) => {
-        cell.deactivate()
-      }) 
-    })
-  }
-
-  public highlightAllNextPositions = (piece: Piece): void => {
-    const currentPiece: Piece = piece
-    const currentPieceBelongTo: number = currentPiece.getBelongTo()
-    const allNextPositions: number[][][] = this.suggestAllNextPositions(currentPiece)
+  public highlightAllNextPositions = (selectedPiece: Piece): void => {
+    const currentPieceBelongTo: number = selectedPiece.getBelongTo()
+    const allNextPositions: number[][][] = this.suggestAllNextPositions(selectedPiece)
 
     this.deactivateAllCell()
 
@@ -130,8 +121,16 @@ export class Board {
     })
   }
 
-  public suggestAllNextPositions= (piece: Piece): number[][][] => {
+  private suggestAllNextPositions= (piece: Piece): number[][][] => {
     const allNextPositions = piece.getAllNextPositions()
     return allNextPositions
+  }
+
+  public deactivateAllCell() {
+    this.status.forEach((row: Cell[]) => {
+      row.forEach((cell: Cell) => {
+        cell.deactivate()
+      }) 
+    })
   }
 }

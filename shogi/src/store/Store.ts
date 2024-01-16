@@ -1,3 +1,5 @@
+import { State } from "../types/state";
+
 import { Board } from "../models/Board";
 import { Piece } from "../models/Piece";
 import { Turn } from "../models/Turn";
@@ -18,7 +20,7 @@ class Store {
     }
   }
 
-  public getState(): { board: Board, turn: Turn, selectedPiece: Piece|null } {
+  public getState(): State {
     return this.state
   }
 

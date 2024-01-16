@@ -11,28 +11,27 @@ export class PieceController {
   static selectPiece = (selectedPiece: Piece): void => {
     const turn: Turn = store.getState().turn
     const board: Board = store.getState().board
-    if (selectedPiece.getBelongTo() !== turn.getTurn()) return
+    if (!selectedPiece.isOwn(turn.getTurn())) return
     store.setSelectedPiece(selectedPiece)
     board.highlightAllNextPositions(selectedPiece)
     App.render()
   }
 
-  static movePiece = (cell: Cell): void => {
+  static movePiece = (moveToCell: Cell): void => {
+    if (!moveToCell.isActive()) return
+
     const board: Board = store.getState().board
     const turn: Turn = store.getState().turn
     const selectedPiece: Piece|null = store.getState().selectedPiece
-
     if (selectedPiece === null) return
-    if (cell.hasPiece() && !cell.isEnemy(turn.getTurn())) return 
 
-    if (cell.isActive()) {
-      selectedPiece.move(cell.getRow(), cell.getColumn())
-      board.update(selectedPiece)
-      board.deactivateAllCell()
-      turn.changeTurn()
-      App.render()
-    } else {
-      console.error('Select invalid cell')
-    }
+    const belongedPiece: Piece|null = moveToCell.hasPiece() ? moveToCell.getPiece() : null 
+    if (belongedPiece !== null && belongedPiece.isOwn(turn.getTurn())) return
+    
+    selectedPiece.move(moveToCell.getRow(), moveToCell.getColumn())
+    board.update(selectedPiece)
+    board.deactivateAllCell()
+    turn.changeTurn()
+    App.render()
   }
 }
