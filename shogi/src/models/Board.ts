@@ -99,24 +99,21 @@ export class Board {
   }
 
   public highlightAllNextPositions = (selectedPiece: Piece): void => {
-    const currentPieceBelongTo: number = selectedPiece.getBelongTo()
-    const allNextPositions: number[][][] = this.suggestAllNextPositions(selectedPiece)
-
     this.deactivateAllCell()
 
+    const allNextPositions: number[][][] = this.suggestAllNextPositions(selectedPiece)
+
     allNextPositions.forEach(eachDirection => {
-      for (const currentPosition of eachDirection) {
-        const row: number = currentPosition[0]
-        const column: number = currentPosition[1]
+      for (const eachPosition of eachDirection) {
+        const row: number = eachPosition[0]
+        const column: number = eachPosition[1]
         if (row === -1 || column === -1) break
 
         const cell: Cell = this.getCell(row, column)
-        if (cell.hasPiece() && !cell.isEnemy(currentPieceBelongTo)) break
-        if (cell.hasPiece()) {
-          cell.activate()
-          break
-        }
+        const piece: Piece|null = cell.hasPiece() ? cell.getPiece() : null 
+        if (piece !== null && piece.isSameSide(selectedPiece)) break
         cell.activate()
+        if (piece !== null) break 
       }
     })
   }

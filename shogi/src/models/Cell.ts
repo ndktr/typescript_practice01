@@ -48,10 +48,4 @@ export class Cell {
   public hasPiece(): boolean {
     return this.piece !== null
   }
-
-  public isEnemy(belongTo: number): boolean {
-    const piece: Piece = this.getPiece() as Piece
-    if (belongTo !== piece.getBelongTo()) return true 
-    return false 
-  }
 }

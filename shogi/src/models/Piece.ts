@@ -80,6 +80,11 @@ export class Piece {
     return true
   }
 
+  public isSameSide(piece: Piece) {
+    if (this.getBelongTo() !== piece.getBelongTo()) return false
+    return true
+  }
+
   public move(row: number, column: number) {
     this.previous = cloneDeep(this.getCurrentPosition())
     this.current = [row, column] 
