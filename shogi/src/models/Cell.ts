@@ -4,45 +4,48 @@ export class Cell {
   private row: number
   private column: number
   private piece: Piece|null
-  private hasPiece: boolean
-  private isActive: boolean
+  private active: boolean
 
   constructor(row: number, column: number) {
     this.row = row
     this.column = column
     this.piece = null
-    this.hasPiece = false
-    this.isActive = false
+    this.active = false
   }
 
   public getPiece(): Piece|null {
-    if (this.checkHasPiece()) return this.piece
-    return null
+    return this.piece
+  }
+
+  public getRow(): number {
+    return this.row
+  }
+
+  public getColumn(): number {
+    return this.column
   }
 
   public set(piece: Piece) {
     this.piece = piece 
-    this.hasPiece = true
   }
 
   public remove() {
     this.piece = null
-    this.hasPiece = false
   }
 
   public activate() {
-    this.isActive = true
+    this.active = true
   }
 
   public deactivate() {
-    this.isActive = false
+    this.active = false
   }
 
-  public checkIsActive(): boolean {
-    return this.isActive
+  public isActive(): boolean {
+    return this.active
   }
 
-  public checkHasPiece(): boolean {
-    return this.hasPiece
+  public hasPiece(): boolean {
+    return this.piece !== null
   }
 }

@@ -1,16 +1,10 @@
 import './style.css'
 
-import { PieceHandler } from './event-handler/PieceHandler.ts'
-import { Board } from './models/Board.ts'
+import { App } from './app/App.ts'
 
 
 const main = () => {
-  const board: Board = new Board()
-  PieceHandler.selectPiece(board, 0, 2)
-  PieceHandler.movePiece(board, 1, 3)
-  PieceHandler.selectPiece(board, 1, 3)
-  PieceHandler.movePiece(board, 0, 2)
-  console.log(board.getStatus())
+  App.render()
 }
 
 main()
