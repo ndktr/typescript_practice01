@@ -7,7 +7,7 @@ import {
 
 export class Board {
   private status: Cell[][]
-  private outBoardPieces: Piece[]
+  private outOfBoardPieces: Piece[]
 
   constructor() {
     this.status =  (
@@ -15,7 +15,7 @@ export class Board {
         (_, i) => Array.from({length:9}).map(
           (_, j) => new Cell(i, j))))
 
-    this.outBoardPieces = [] 
+    this.outOfBoardPieces = [] 
 
     this.set(new Lance('香', 1, true, [0, 0]))
     this.set(new Knight('桂', 1, true, [0, 1]))
@@ -94,13 +94,14 @@ export class Board {
     if (!moveToCell.isActive()) return
 
     if (moveToCell.hasPiece()) {
-      // TODO: ここで駒を取る処理を書く
+      // TODO: write taken piece logic 
       const takenPiece: Piece = moveToCell.getPiece() as Piece
-      console.log(takenPiece)
-      // TODO: 成るかどうかの処理を書く 
-      // piece.promoteIfOk()
+      this.addOutOfBoardPiece(takenPiece)
+      console.log(this.outOfBoardPieces)
     }
 
+    // TODO: write promote logic 
+    // piece.promoteIfOk()
     moveToCell.set(piece)
     prevoiusCell.remove()
   }
@@ -136,5 +137,10 @@ export class Board {
         cell.deactivate()
       }) 
     })
+  }
+
+  addOutOfBoardPiece(piece: Piece) {
+    piece.outFromBoard()
+    this.outOfBoardPieces.push(piece)
   }
 }

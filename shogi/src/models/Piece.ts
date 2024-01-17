@@ -89,6 +89,11 @@ export class Piece {
     this.previous = cloneDeep(this.getCurrentPosition())
     this.current = [row, column] 
   }
+
+  public outFromBoard() {
+    this.belongTo = this.belongTo === 1 ? 2 : 1
+    this.onBoard = false
+  }
 }
 
 export class Pawn extends Piece {
