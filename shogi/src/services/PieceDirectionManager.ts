@@ -1,17 +1,17 @@
 import { cloneDeep } from 'lodash'
 
-export class PieceDirectionCalcurator {
+export default class PieceDirectionManager {
   static registry: Record<string, (currentPosition: number[], isForward: boolean) => number[]> = {
-    'forward': PieceDirectionCalcurator.addOneToForward,
-    'rightForward': PieceDirectionCalcurator.addOneToRightForward,
-    'right': PieceDirectionCalcurator.addOneToRight,
-    'rightBackward': PieceDirectionCalcurator.addOneToRightBackward,
-    'backward': PieceDirectionCalcurator.addOneToBackward,
-    'leftBackward': PieceDirectionCalcurator.addOneToLeftBackward,
-    'left': PieceDirectionCalcurator.addOneToLeft,
-    'leftForward': PieceDirectionCalcurator.addOneToLeftForward,
-    'knightRightForward': PieceDirectionCalcurator.addOneToKnightRightForward,
-    'knightLeftForward': PieceDirectionCalcurator.addOneToKnightLeftForward
+    'forward': PieceDirectionManager.addOneToForward,
+    'rightForward': PieceDirectionManager.addOneToRightForward,
+    'right': PieceDirectionManager.addOneToRight,
+    'rightBackward': PieceDirectionManager.addOneToRightBackward,
+    'backward': PieceDirectionManager.addOneToBackward,
+    'leftBackward': PieceDirectionManager.addOneToLeftBackward,
+    'left': PieceDirectionManager.addOneToLeft,
+    'leftForward': PieceDirectionManager.addOneToLeftForward,
+    'knightRightForward': PieceDirectionManager.addOneToKnightRightForward,
+    'knightLeftForward': PieceDirectionManager.addOneToKnightLeftForward
   }
   
   static getNextPositions(direction: string, isForward: boolean, currentPosition: number[], step: number): number[][] {
@@ -19,13 +19,13 @@ export class PieceDirectionCalcurator {
 
     const nextPositions: number[][] = []
 
-    const addOneToProperDirection = PieceDirectionCalcurator.registry[direction]
+    const addOneToProperDirection = PieceDirectionManager.registry[direction]
     if (!addOneToProperDirection) console.error('registry do not have such a function') 
 
     const nextPosition: number[] = cloneDeep(currentPosition)
     for (let i = 0; i < step; i++) {
       const [row, column] = addOneToProperDirection(nextPosition, isForward)
-      if (!PieceDirectionCalcurator.isWithinBoard(row, column)) break
+      if (!PieceDirectionManager.isWithinBoard(row, column)) break
       nextPosition[0] = row
       nextPosition[1] = column
       nextPositions.push(cloneDeep(nextPosition))
