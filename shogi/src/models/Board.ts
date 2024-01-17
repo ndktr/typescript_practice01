@@ -4,6 +4,7 @@ import { Cell } from './Cell.ts'
 import { 
   Piece, Pawn, King, Gold, Silver, Knight, Lance, Rook, Bishop 
 } from './Piece.ts'
+import PiecePromoteManager from '../services/PiecePromoteManager.ts'
 
 export class Board {
   private status: Cell[][]
@@ -94,14 +95,18 @@ export class Board {
     if (!moveToCell.isActive()) return
 
     if (moveToCell.hasPiece()) {
-      // TODO: write taken piece logic 
       const takenPiece: Piece = moveToCell.getPiece() as Piece
       this.addOutOfBoardPiece(takenPiece)
       console.log(this.outOfBoardPieces)
     }
 
     // TODO: write promote logic 
-    // piece.promoteIfOk()
+    if (PiecePromoteManager.isPromotable(piece)) {
+      // TODO: show modal to ask if user wants to promote
+      const answer: boolean = confirm('Promote?')
+      if (answer) piece = PiecePromoteManager.getInstance(piece) as Piece
+    }
+
     moveToCell.set(piece)
     prevoiusCell.remove()
   }

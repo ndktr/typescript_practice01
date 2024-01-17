@@ -1,9 +1,9 @@
 import store from "../store/Store"
-
+import { PieceController } from "../controllers/PieceController"
 import { Board } from "../models/Board"
 import { Cell } from "../models/Cell"
 import { Piece } from "../models/Piece"
-import { PieceController } from "../controllers/PieceController"
+
 
 export class App {
   static create(board: Board): HTMLElement {
