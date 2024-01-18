@@ -6,7 +6,7 @@ import { Piece } from "../models/Piece"
 
 
 export class App {
-  static create(board: Board): HTMLElement {
+  static createGame(board: Board): HTMLElement {
     const boardStatus: Cell[][] = board.getStatus()
 
     const boardDiv: HTMLElement = App.createBoard()
@@ -22,7 +22,11 @@ export class App {
       boardDiv.appendChild(rowDiv)
     })
 
-    return boardDiv
+    const gameDiv: HTMLElement = document.createElement('div')
+    gameDiv.id = 'game'
+    gameDiv.appendChild(boardDiv)
+
+    return gameDiv
   }
 
   static createBoard(): HTMLElement {
@@ -50,32 +54,48 @@ export class App {
 
     if (cell.hasPiece()) {
       const piece: Piece = cell.getPiece() as Piece
-      const pieceDiv: HTMLElement = App.createPiece(piece, row, column)
+      const pieceDiv: HTMLElement = App.createPiece(piece)
       cellDiv.appendChild(pieceDiv)                           
     }
 
     return cellDiv
   }
 
-  static createPiece(piece: Piece, row: number, column: number): HTMLElement {
+  static createPiece(piece: Piece): HTMLElement {
     const pieceDiv: HTMLElement = document.createElement('div')
     pieceDiv.classList.add('piece')
     pieceDiv.classList.add(`piece-${piece.getBelongTo()}`)
     pieceDiv.innerHTML = piece.getName()
-    pieceDiv.dataset.row = row.toString()
-    pieceDiv.dataset.column = column.toString()
     pieceDiv.addEventListener('click', () => { PieceController.selectPiece(piece) })
     return pieceDiv
   } 
+
+  static createOutOfBoard(outOfBoardPieces: Piece[], belongTo: number): HTMLElement {
+    const outOfBoardDiv: HTMLElement = document.createElement('div')
+    outOfBoardDiv.classList.add('out-of-board')
+    outOfBoardDiv.classList.add(`out-of-board-${belongTo}`)
+    const filteredOutOfBoardPieces: Piece[] = (
+      outOfBoardPieces.filter((piece: Piece) => piece.getBelongTo() === belongTo)) 
+    filteredOutOfBoardPieces.forEach((piece: Piece) => {
+      const pieceDiv: HTMLElement = App.createPiece(piece)
+      outOfBoardDiv.appendChild(pieceDiv)
+    })
+    return outOfBoardDiv
+  }
 
   static render(): void {
     const app = document.getElementById('app')
     if (app === null) return
 
     const board: Board = store.getState().board
+    const outOfBoardPieces: Piece[] = board.getOutOfBoardPieces()
 
-    const boardHtml: HTMLElement = App.create(board) 
+    const boardHtml: HTMLElement = App.createGame(board)
+    const outOfBoardHtml1: HTMLElement = App.createOutOfBoard(outOfBoardPieces, 1)
+    const outOfBoardHtml2: HTMLElement = App.createOutOfBoard(outOfBoardPieces, 2)
     app.innerHTML = ''
+    app.appendChild(outOfBoardHtml1)
     app.appendChild(boardHtml)
+    app.appendChild(outOfBoardHtml2)
   }
 }
