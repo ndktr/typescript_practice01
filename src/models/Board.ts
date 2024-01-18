@@ -101,7 +101,7 @@ export class Board {
     if (moveToCell.hasPiece()) {
       const takenPiece: Piece = moveToCell.getPiece() as Piece
       if (takenPiece.isPromoted()) takenPiece.init()
-      this.addOutOfBoardPiece(takenPiece)
+      this.addOutOfBoardPieces(takenPiece)
     }
 
     if (PiecePromoteManager.isPromotable(piece)) {
@@ -133,6 +133,17 @@ export class Board {
     })
   }
 
+  public highlightAllNextPositionsForOutOfBoard = (selectedPiece: Piece): void => {
+    this.deactivateAllCell()
+
+    this.status.forEach((row: Cell[]) => {
+      for (const cell of row) {
+        if (cell.hasPiece()) continue
+        cell.activate()
+      }
+    })
+  }
+
   private suggestAllNextPositions= (piece: Piece): number[][][] => {
     const allNextPositions = piece.getAllNextPositions()
     return allNextPositions
@@ -146,8 +157,12 @@ export class Board {
     })
   }
 
-  addOutOfBoardPiece(piece: Piece) {
+  private addOutOfBoardPieces(piece: Piece) {
     piece.outFromBoard()
     this.outOfBoardPieces.push(piece)
+  }
+
+  private removeOutOfBoardPiece(pieces: Piece): void {
+    //
   }
 }

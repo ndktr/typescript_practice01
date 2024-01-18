@@ -124,6 +124,10 @@ export class Piece {
     this.onBoard = false
   }
 
+  public setOnBoard() {
+    this.onBoard = false
+  }
+
   public promote() {
     this.promoted = true
   }

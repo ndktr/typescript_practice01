@@ -94,8 +94,8 @@ export class App {
     const outOfBoardHtml1: HTMLElement = App.createOutOfBoard(outOfBoardPieces, 1)
     const outOfBoardHtml2: HTMLElement = App.createOutOfBoard(outOfBoardPieces, 2)
     app.innerHTML = ''
-    app.appendChild(outOfBoardHtml1)
     app.appendChild(boardHtml)
+    app.appendChild(outOfBoardHtml1)
     app.appendChild(outOfBoardHtml2)
   }
 }

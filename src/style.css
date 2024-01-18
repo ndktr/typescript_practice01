@@ -19,32 +19,41 @@ html, body {
 }
 
 #board {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  right: 0;
-  left: 0;
-  width: 450px;
-  height: 450px;
-  background: #FDDBA8;
-  margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+    left: 0;
+    width: 450px;
+    height: 450px;
+    background: #f2c996;
+    border: 1px solid #000;
+    margin: 0 auto;
 }
 
 #board .row {
     display: flex;
     justify-content: center;
     align-items: center;
+    border-bottom: 1px solid #000;
+}
+
+#board .row:last-child {
+    border-bottom: none;
 }
 
 #board .row .cell {
-    box-sizing: border-box;
-    border: 1px solid #000;
-    width: 50px;
-    height: 50px;
+    width: 49px;
+    height: 49px;
+    border-right: 1px solid #000;
+}
+
+#board .row .cell:last-child {
+    border-right: none;
 }
 
 #board .row .cell.active {
-    background: #FFF110;
+    background: #fcdab0;
 }
 
 #board .row .cell .piece {
@@ -93,5 +102,5 @@ html, body {
     height: 50px;
     box-sizing: border-box;
     border: 1px solid #000;
-    background: #FDDBA8
+    background: #f2c996;
 }
