@@ -61,7 +61,7 @@ export class App {
     return cellDiv
   }
 
-  static createPiece(piece: Piece, row: number, column: number): HTMLElement {
+  static createPiece(piece: Piece): HTMLElement {
     const pieceDiv: HTMLElement = document.createElement('div')
     pieceDiv.classList.add('piece')
     pieceDiv.classList.add(`piece-${piece.getBelongTo()}`)
@@ -77,7 +77,7 @@ export class App {
     const filteredOutOfBoardPieces: Piece[] = (
       outOfBoardPieces.filter((piece: Piece) => piece.getBelongTo() === belongTo)) 
     filteredOutOfBoardPieces.forEach((piece: Piece) => {
-      const pieceDiv: HTMLElement = App.createPiece(piece, 0, 0)
+      const pieceDiv: HTMLElement = App.createPiece(piece)
       outOfBoardDiv.appendChild(pieceDiv)
     })
     return outOfBoardDiv
