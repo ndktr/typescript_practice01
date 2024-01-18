@@ -13,7 +13,6 @@ export class PieceController {
     const state: State = store.getState()
     const turn: Turn = state.turn
     const board: Board = state.board
-    console.log(selectedPiece)
     if (!selectedPiece.isOwn(turn.getTurn())) return
     store.setSelectedPiece(selectedPiece)
     if (selectedPiece.isOnBoard()) {

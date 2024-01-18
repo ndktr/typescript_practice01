@@ -91,16 +91,11 @@ export class Board {
     const moveToColumn: number = moveToPosition[1]
     const moveToCell: Cell = this.getCell(moveToRow, moveToColumn)
 
-    const previousPosition: number[] = piece.getPreviousPosition()
-    const previousRow: number = previousPosition[0]
-    const previousColumn: number = previousPosition[1]
-    const prevoiusCell: Cell = this.getCell(previousRow, previousColumn)
-
     if (!moveToCell.isActive()) return
 
     if (moveToCell.hasPiece()) {
       const takenPiece: Piece = moveToCell.getPiece() as Piece
-      if (takenPiece.isPromoted()) takenPiece.init()
+      takenPiece.init()
       this.addOutOfBoardPieces(takenPiece)
     }
 
@@ -110,6 +105,26 @@ export class Board {
     }
 
     moveToCell.set(piece)
+
+    if (piece.isOnBoard()) {
+      this.removePieceFromPreviousCell(piece)
+      //Todo: strange move
+      piece.setOnBoard()
+      console.log(piece)
+    } else {
+      console.log(this.outOfBoardPieces)
+      console.log(piece)
+      this.outOfBoardPieces.forEach((eachPiece: Piece, index: number) => { 
+        if (eachPiece === piece) this.outOfBoardPieces.splice(index, 1)
+      })
+    }
+  }
+
+  public removePieceFromPreviousCell(piece: Piece): void {
+    const previousPosition: number[] = piece.getPreviousPosition()
+    const previousRow: number = previousPosition[0]
+    const previousColumn: number = previousPosition[1]
+    const prevoiusCell: Cell = this.getCell(previousRow, previousColumn)
     prevoiusCell.remove()
   }
 
