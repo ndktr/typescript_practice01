@@ -73,6 +73,10 @@ export class Board {
     return this.status[row][column]
   }
 
+  public getOutOfBoardPieces() {
+    return this.outOfBoardPieces
+  }
+
   public set(piece: Piece): void {
     const currentPosition: number[] = piece.getCurrentPosition()
     const row: number = currentPosition[0]
