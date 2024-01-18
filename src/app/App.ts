@@ -54,7 +54,7 @@ export class App {
 
     if (cell.hasPiece()) {
       const piece: Piece = cell.getPiece() as Piece
-      const pieceDiv: HTMLElement = App.createPiece(piece, row, column)
+      const pieceDiv: HTMLElement = App.createPiece(piece)
       cellDiv.appendChild(pieceDiv)                           
     }
 
