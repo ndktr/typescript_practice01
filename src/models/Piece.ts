@@ -4,6 +4,7 @@ import { cloneDeep } from 'lodash'
 
 import PieceDirectionManager from '../services/PieceDirectionManager.ts'
 
+
 export class Piece {
   private front: Front 
   private back: Back|null 
@@ -74,71 +75,73 @@ export class Piece {
       left, leftForward, knightRightForward, knightLeftForward]
   }
 
-  public getName() {
+  public getName(): string {
     if (this.promoted && this.back !== null) return this.back.name 
     return this.front.name
   }
   
-  public getSteps() {
+  public getSteps(): number[] {
     if (this.promoted && this.back !== null) return this.back.steps 
     return this.front.steps
   }
 
-  public getCurrentPosition() {
+  public getCurrentPosition(): number[] {
     return this.current
   }
 
-  public getPreviousPosition() {
+  public getPreviousPosition(): number[] {
     return this.previous
   }
 
-  public getIsForward() {
+  public getIsForward(): boolean {
     return this.isForward
   }
 
-  public getBelongTo() {
+  public getBelongTo(): number {
     return this.belongTo
   }
 
-  public isOwn(currentTurn: number) {
-    if (this.getBelongTo() !== currentTurn) return false
-    return true
-  }
-
-  public isSameSide(piece: Piece) {
-    if (this.getBelongTo() !== piece.getBelongTo()) return false
-    return true
-  }
-
-  public setNextPosition(row: number, column: number) {
+  public setNextPosition(row: number, column: number): void {
     this.previous = cloneDeep(this.getCurrentPosition())
     this.current = [row, column] 
   }
 
-  isOnBoard() {
-    return this.onBoard
+  public setOnBoard(): void {
+    this.onBoard = true
   }
 
-  public outFromBoard() {
+  public outFromBoard(): void {
     this.belongTo = this.belongTo === 1 ? 2 : 1
+    this.isForward = !this.isForward
     this.promoted = false
     this.onBoard = false
     this.current = [-1, -1]
     this.previous = [-1, -1]
   }
 
-  public setOnBoard() {
-    this.onBoard = true 
-  }
-
-  public promote() {
+  public promote(): void {
     this.promoted = true
   }
 
-  public isPromoted() {
+  public isOwn(currentTurn: number): boolean {
+    if (this.getBelongTo() !== currentTurn) return false
+    return true
+  }
+
+  public isSameSide(piece: Piece): boolean {
+    if (this.getBelongTo() !== piece.getBelongTo()) return false
+    return true
+  }
+
+  public isOnBoard(): boolean {
+    return this.onBoard
+  }
+
+  public isPromoted(): boolean {
     return this.promoted
   }
 }
+
 
 export class Pawn extends Piece {
   constructor (belongTo: number, isForward: boolean, current: number[]) {
@@ -148,6 +151,7 @@ export class Pawn extends Piece {
   }
 }
 
+
 export class Lance extends Piece {
   constructor (belongTo: number, isForward: boolean, current: number[]) {
     const front = {name: '香', steps: [8, 0, 0, 0, 0, 0, 0, 0, 0, 0]}
@@ -155,6 +159,7 @@ export class Lance extends Piece {
     super(front, back, belongTo, isForward, current)
   }
 }
+
 
 export class Knight extends Piece {
   constructor (belongTo: number, isForward: boolean, current: number[]) {
@@ -164,6 +169,7 @@ export class Knight extends Piece {
   }
 }
 
+
 export class Silver extends Piece {
   constructor (belongTo: number, isForward: boolean, current: number[]) {
     const front = {name: '銀', steps: [1, 1, 0, 1, 0, 1, 0, 1, 0, 0]}
@@ -171,6 +177,7 @@ export class Silver extends Piece {
     super(front, back, belongTo, isForward, current)
   }
 }
+
 
 export class Gold extends Piece {
   constructor (belongTo: number, isForward: boolean, current: number[]) {
@@ -180,6 +187,7 @@ export class Gold extends Piece {
   }
 }
 
+
 export class Bishop extends Piece {
   constructor (belongTo: number, isForward: boolean, current: number[]) {
     const front = {name: '角', steps: [0, 8, 0, 8, 0, 8, 0, 8, 0, 0]}
@@ -188,6 +196,7 @@ export class Bishop extends Piece {
   }
 }
 
+
 export class Rook extends Piece {
   constructor (belongTo: number, isForward: boolean, current: number[]) {
     const front = {name: '飛', steps: [8, 0, 8, 0, 8, 0, 8, 0, 0, 0]}
@@ -195,6 +204,7 @@ export class Rook extends Piece {
     super(front, back, belongTo, isForward, current)
   }
 }
+
 
 export class King extends Piece {
   constructor (belongTo: number, isForward: boolean, current: number[]) {

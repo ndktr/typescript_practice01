@@ -105,7 +105,7 @@ export default class PieceDirectionManager {
     return [row-2, column-1]
   }
 
-  static isWithinBoard(row: number, column: number) {
+  static isWithinBoard(row: number, column: number): boolean {
     if (row > 8 || row < 0 || column > 8 || column < 0) {
       return false
     }
