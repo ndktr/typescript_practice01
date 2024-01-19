@@ -34,9 +34,9 @@ export default class RuleManager {
 
   static isMustPromote(piece: Piece, cell: Cell): boolean {
     const row: number = cell.getRow()
-    if (piece.getName() === '歩' && (row === 0 || row === 8)) return true
-    if (piece.getName() === '香' && (row === 0 || row === 8)) return true
-    if (piece.getName() === '桂' && (row === 1 || row === 7)) return true
+    if (piece.isPawn() && (row === 0 || row === 8)) return true
+    if (piece.isLance() && (row === 0 || row === 8)) return true
+    if (piece.isKnight() && (row === 1 || row === 7)) return true
     return false
   }
 
@@ -49,7 +49,7 @@ export default class RuleManager {
     boardStatus.forEach((row: Cell[]) => {
       row.forEach((cell: Cell) => {
       const targetPiece = cell.hasPiece() ? cell.getPiece() : null
-      if (targetPiece !== null && targetPiece.getName() === '歩' &&
+      if (targetPiece !== null && targetPiece.isPawn() &&
         piece.getBelongTo() === targetPiece.getBelongTo()) {
           const column: number = cell.getColumn()
           columns.push(column)
