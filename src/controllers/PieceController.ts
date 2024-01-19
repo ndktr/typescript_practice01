@@ -18,7 +18,7 @@ export class PieceController {
     if (selectedPiece.isOnBoard()) {
       board.highlightAllNextPositions(selectedPiece)
     } else {
-      board.highlightAllNextPositionsForOutOfBoard(selectedPiece)
+      board.highlightAllNextPositionsForOutOfBoard()
     }
     App.render()
   }
