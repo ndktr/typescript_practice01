@@ -13,10 +13,6 @@ export class Cell {
     this.active = false
   }
 
-  public getPiece(): Piece|null {
-    return this.piece
-  }
-
   public getRow(): number {
     return this.row
   }
@@ -25,19 +21,23 @@ export class Cell {
     return this.column
   }
 
-  public set(piece: Piece) {
+  public getPiece(): Piece|null {
+    return this.piece
+  }
+
+  public set(piece: Piece): void {
     this.piece = piece 
   }
 
-  public remove() {
+  public remove(): void {
     this.piece = null
   }
 
-  public activate() {
+  public activate(): void {
     this.active = true
   }
 
-  public deactivate() {
+  public deactivate(): void {
     this.active = false
   }
 

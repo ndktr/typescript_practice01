@@ -2,7 +2,7 @@ import { Piece } from '../models/Piece'
 
 export default class PiecePromoteManager {
   static isPromotable(piece: Piece): boolean {
-    if (piece.isPromoted()) return false
+    if (piece.isPromoted() || !piece.isOnBoard()) return false
 
     const currentPosition: number[] = piece.getCurrentPosition()
     const row: number = currentPosition[0]

@@ -6,6 +6,7 @@ import {
 } from './Piece.ts'
 import PiecePromoteManager from '../services/PiecePromoteManager.ts'
 
+
 export class Board {
   private status: Cell[][]
   private outOfBoardPieces: Piece[]
@@ -65,15 +66,15 @@ export class Board {
     this.set(new Pawn(2, false, [6, 8]))
   }
 
-  public getStatus() {
+  public getStatus(): Cell[][] {
     return cloneDeep(this.status)
   }
 
-  public getCell(row: number, column: number) {
+  public getCell(row: number, column: number): Cell {
     return this.status[row][column]
   }
 
-  public getOutOfBoardPieces() {
+  public getOutOfBoardPieces(): Piece[] {
     return this.outOfBoardPieces
   }
 
@@ -95,7 +96,7 @@ export class Board {
 
     if (moveToCell.hasPiece()) {
       const takenPiece: Piece = moveToCell.getPiece() as Piece
-      this.addOutOfBoardPieces(takenPiece)
+      this.addToOutOfBoardPieces(takenPiece)
     }
 
     if (PiecePromoteManager.isPromotable(piece)) {
@@ -104,20 +105,23 @@ export class Board {
     }
 
     if (piece.isOnBoard()) {
-      // logic for remove piece from previous cell
       this.removePieceFromPreviousCell(piece)
-      console.log(piece)
     } else {
-      // logic for remove piece from out of board
-      console.log(this.outOfBoardPieces)
-      console.log(piece)
       this.outOfBoardPieces.forEach((eachPiece: Piece, index: number) => { 
         if (eachPiece === piece) this.outOfBoardPieces.splice(index, 1)
       })
     }
 
     if (!piece.isOnBoard()) piece.setOnBoard()
+    console.log('################################')
+    console.log(piece)
+
     moveToCell.set(piece)
+  }
+
+  private addToOutOfBoardPieces(piece: Piece): void {
+    piece.outFromBoard()
+    this.outOfBoardPieces.push(piece)
   }
 
   public removePieceFromPreviousCell(piece: Piece): void {
@@ -133,7 +137,7 @@ export class Board {
 
     const allNextPositions: number[][][] = this.suggestAllNextPositions(selectedPiece)
 
-    allNextPositions.forEach(eachDirection => {
+    allNextPositions.forEach((eachDirection: number[][]) => {
       for (const eachPosition of eachDirection) {
         const row: number = eachPosition[0]
         const column: number = eachPosition[1]
@@ -164,16 +168,11 @@ export class Board {
     return allNextPositions
   }
 
-  public deactivateAllCell() {
+  public deactivateAllCell(): void {
     this.status.forEach((row: Cell[]) => {
       row.forEach((cell: Cell) => {
         cell.deactivate()
       }) 
     })
-  }
-
-  private addOutOfBoardPieces(piece: Piece) {
-    piece.outFromBoard()
-    this.outOfBoardPieces.push(piece)
   }
 }
