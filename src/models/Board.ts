@@ -97,7 +97,7 @@ export class Board {
       this.addToOutOfBoardPieces(takenPiece)
     }
 
-    if (RuleManager.canPromote(piece) && RuleManager.isMustPromote(piece, moveToCell)) {
+    if (RuleManager.canPromote(piece) && RuleManager.isMustPromote(piece, moveToRow)) {
       piece.promote()
     } else if (RuleManager.canPromote(piece)) {
       const answer: boolean = confirm('Promote?')
@@ -161,7 +161,8 @@ export class Board {
 
     const columnsHasPawn: number[] = RuleManager.existsPawnInSameColumn(piece)
 
-    this.status.forEach((row: Cell[]) => {
+    this.status.forEach((row: Cell[], rowIndex: number) => {
+      if (RuleManager.cannotSetToTheRow(piece, rowIndex)) return 
       for (const cell of row) {
         if (cell.hasPiece()) continue
         const column: number = cell.getColumn()

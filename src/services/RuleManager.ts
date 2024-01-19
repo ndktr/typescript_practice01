@@ -32,8 +32,7 @@ export default class RuleManager {
     return false
   }
 
-  static isMustPromote(piece: Piece, cell: Cell): boolean {
-    const row: number = cell.getRow()
+  static isMustPromote(piece: Piece, row: number): boolean {
     if (piece.isPawn() && (row === 0 || row === 8)) return true
     if (piece.isLance() && (row === 0 || row === 8)) return true
     if (piece.isKnight() && (row === 1 || row === 7)) return true
@@ -41,6 +40,8 @@ export default class RuleManager {
   }
 
   static existsPawnInSameColumn(piece: Piece): number[] {
+    if (!piece.isPawn()) return []
+
     const state: State = store.getState()
     const board: Board = state.board
     const boardStatus: Cell[][] = board.getStatus()
@@ -58,5 +59,12 @@ export default class RuleManager {
     })
 
     return columns
+  }
+
+  static cannotSetToTheRow(piece: Piece, row: number) {
+    if (piece.isPawn() && (row === 0 || row === 8)) return true
+    if (piece.isLance() && (row === 0 || row === 8)) return true
+    if (piece.isKnight() && (row <= 1 || row >= 7)) return true
+    return false
   }
 }
