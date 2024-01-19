@@ -1,4 +1,4 @@
-import { Front, Back } from '../types/piece' 
+import { Front, Back } from '../types/piece'
 
 import { cloneDeep } from 'lodash'
 
@@ -6,19 +6,21 @@ import PieceDirectionManager from '../services/PieceDirectionManager.ts'
 
 
 export class Piece {
-  private front: Front 
-  private back: Back|null 
-  private belongTo: number 
+  private front: Front
+  private back: Back|null
+  size: number
+  private belongTo: number
   private isForward: boolean
   private current: number[]
   private previous: number[]
   private onBoard: boolean
   private promoted: boolean
 
-  constructor(front: Front, back: Back|null, belongTo: number, isForward: boolean,
-    current: number[]) {
+  constructor(front: Front, back: Back|null, size: number, belongTo: number,
+    isForward: boolean, current: number[]) {
     this.front = front
     this.back = back
+    this.size = size
     this.belongTo = belongTo
     this.isForward = isForward
     this.current = current 
@@ -147,7 +149,7 @@ export class Pawn extends Piece {
   constructor (belongTo: number, isForward: boolean, current: number[]) {
     const front = {name: '歩', steps: [1, 0, 0, 0, 0, 0, 0, 0, 0, 0]}
     const back = {name: 'と', steps: [1, 1, 1, 0, 1, 0, 1, 1, 0, 0]}
-    super(front, back, belongTo, isForward, current)
+    super(front, back, 1, belongTo, isForward, current)
   }
 }
 
@@ -156,7 +158,7 @@ export class Lance extends Piece {
   constructor (belongTo: number, isForward: boolean, current: number[]) {
     const front = {name: '香', steps: [8, 0, 0, 0, 0, 0, 0, 0, 0, 0]}
     const back = {name: '杏', steps: [1, 1, 1, 0, 1, 0, 1, 1, 0, 0]}
-    super(front, back, belongTo, isForward, current)
+    super(front, back, 2, belongTo, isForward, current)
   }
 }
 
@@ -165,7 +167,7 @@ export class Knight extends Piece {
   constructor (belongTo: number, isForward: boolean, current: number[]) {
     const front = {name: '桂', steps: [0, 0, 0, 0, 0, 0, 0, 0, 1, 1]}
     const back = {name: '圭', steps: [1, 1, 1, 0, 1, 0, 1, 1, 0, 0]}
-    super(front, back, belongTo, isForward, current)
+    super(front, back, 3, belongTo, isForward, current)
   }
 }
 
@@ -174,7 +176,7 @@ export class Silver extends Piece {
   constructor (belongTo: number, isForward: boolean, current: number[]) {
     const front = {name: '銀', steps: [1, 1, 0, 1, 0, 1, 0, 1, 0, 0]}
     const back = {name: '全', steps: [1, 1, 1, 0, 1, 0, 1, 1, 0, 0]}
-    super(front, back, belongTo, isForward, current)
+    super(front, back, 4, belongTo, isForward, current)
   }
 }
 
@@ -183,7 +185,7 @@ export class Gold extends Piece {
   constructor (belongTo: number, isForward: boolean, current: number[]) {
     const front = {name: '金', steps: [1, 1, 1, 0, 1, 0, 1, 1, 0, 0]}
     const back = null
-    super(front, back, belongTo, isForward, current)
+    super(front, back, 5, belongTo, isForward, current)
   }
 }
 
@@ -192,7 +194,7 @@ export class Bishop extends Piece {
   constructor (belongTo: number, isForward: boolean, current: number[]) {
     const front = {name: '角', steps: [0, 8, 0, 8, 0, 8, 0, 8, 0, 0]}
     const back = {name: '馬', steps: [1, 8, 1, 8, 1, 8, 1, 8, 0, 0]}
-    super(front, back, belongTo, isForward, current)
+    super(front, back, 6, belongTo, isForward, current)
   }
 }
 
@@ -201,7 +203,7 @@ export class Rook extends Piece {
   constructor (belongTo: number, isForward: boolean, current: number[]) {
     const front = {name: '飛', steps: [8, 0, 8, 0, 8, 0, 8, 0, 0, 0]}
     const back = {name: '龍', steps: [8, 1, 8, 1, 8, 1, 8, 1, 0, 0]}
-    super(front, back, belongTo, isForward, current)
+    super(front, back, 7, belongTo, isForward, current)
   }
 }
 
@@ -210,6 +212,6 @@ export class King extends Piece {
   constructor (belongTo: number, isForward: boolean, current: number[]) {
     const front = {name: '王', steps: [1, 1, 1, 1, 1, 1, 1, 1, 0, 0]}
     const back = null
-    super(front, back, belongTo, isForward, current)
+    super(front, back, 8, belongTo, isForward, current)
   }
 }
