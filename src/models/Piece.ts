@@ -121,7 +121,14 @@ export class Piece {
 
   public outFromBoard() {
     this.belongTo = this.belongTo === 1 ? 2 : 1
+    this.promoted = false
     this.onBoard = false
+    this.current = [-1, -1]
+    this.previous = [-1, -1]
+  }
+
+  public setOnBoard() {
+    this.onBoard = true 
   }
 
   public promote() {
@@ -130,13 +137,6 @@ export class Piece {
 
   public isPromoted() {
     return this.promoted
-  }
-
-  public init() {
-    this.promoted = false
-    this.onBoard = false
-    this.current = [-1, -1]
-    this.previous = [-1, -1]
   }
 }
 

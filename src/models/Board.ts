@@ -81,7 +81,7 @@ export class Board {
     const currentPosition: number[] = piece.getCurrentPosition()
     const row: number = currentPosition[0]
     const column: number = currentPosition[1]
-    const cell: Cell = this.status[row][column]
+    const cell: Cell = this.getCell(row, column)
     cell.set(piece)
   }
 
@@ -91,17 +91,11 @@ export class Board {
     const moveToColumn: number = moveToPosition[1]
     const moveToCell: Cell = this.getCell(moveToRow, moveToColumn)
 
-    const previousPosition: number[] = piece.getPreviousPosition()
-    const previousRow: number = previousPosition[0]
-    const previousColumn: number = previousPosition[1]
-    const prevoiusCell: Cell = this.getCell(previousRow, previousColumn)
-
     if (!moveToCell.isActive()) return
 
     if (moveToCell.hasPiece()) {
       const takenPiece: Piece = moveToCell.getPiece() as Piece
-      if (takenPiece.isPromoted()) takenPiece.init()
-      this.addOutOfBoardPiece(takenPiece)
+      this.addOutOfBoardPieces(takenPiece)
     }
 
     if (PiecePromoteManager.isPromotable(piece)) {
@@ -109,7 +103,28 @@ export class Board {
       if (answer) piece.promote()
     }
 
+    if (piece.isOnBoard()) {
+      // logic for remove piece from previous cell
+      this.removePieceFromPreviousCell(piece)
+      console.log(piece)
+    } else {
+      // logic for remove piece from out of board
+      console.log(this.outOfBoardPieces)
+      console.log(piece)
+      this.outOfBoardPieces.forEach((eachPiece: Piece, index: number) => { 
+        if (eachPiece === piece) this.outOfBoardPieces.splice(index, 1)
+      })
+    }
+
+    if (!piece.isOnBoard()) piece.setOnBoard()
     moveToCell.set(piece)
+  }
+
+  public removePieceFromPreviousCell(piece: Piece): void {
+    const previousPosition: number[] = piece.getPreviousPosition()
+    const previousRow: number = previousPosition[0]
+    const previousColumn: number = previousPosition[1]
+    const prevoiusCell: Cell = this.getCell(previousRow, previousColumn)
     prevoiusCell.remove()
   }
 
@@ -133,6 +148,17 @@ export class Board {
     })
   }
 
+  public highlightAllNextPositionsForOutOfBoard = (): void => {
+    this.deactivateAllCell()
+
+    this.status.forEach((row: Cell[]) => {
+      for (const cell of row) {
+        if (cell.hasPiece()) continue
+        cell.activate()
+      }
+    })
+  }
+
   private suggestAllNextPositions= (piece: Piece): number[][][] => {
     const allNextPositions = piece.getAllNextPositions()
     return allNextPositions
@@ -146,7 +172,7 @@ export class Board {
     })
   }
 
-  addOutOfBoardPiece(piece: Piece) {
+  private addOutOfBoardPieces(piece: Piece) {
     piece.outFromBoard()
     this.outOfBoardPieces.push(piece)
   }
