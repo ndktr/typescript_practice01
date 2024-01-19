@@ -5,6 +5,10 @@ export class Turn {
     this.turn = 1
   }
 
+  init(): void {
+    this.turn = 1
+  }
+
   public getTurn(): number {
     return this.turn
   }

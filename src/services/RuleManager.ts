@@ -61,10 +61,15 @@ export default class RuleManager {
     return columns
   }
 
-  static cannotSetToTheRow(piece: Piece, row: number) {
+  static cannotSetToTheRow(piece: Piece, row: number): boolean {
     if (piece.isPawn() && (row === 0 || row === 8)) return true
     if (piece.isLance() && (row === 0 || row === 8)) return true
     if (piece.isKnight() && (row <= 1 || row >= 7)) return true
     return false
+  }
+
+  static isWin(piece: Piece|null): boolean {
+    if (piece === null) return false
+    return piece.isKing()
   }
 }
