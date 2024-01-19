@@ -19,7 +19,7 @@ export class PieceController {
     if (selectedPiece.isOnBoard()) {
       board.highlightAllNextPositions(selectedPiece)
     } else {
-      board.highlightAllNextPositionsForOutOfBoard()
+      board.highlightAllNextPositionsForOutOfBoard(selectedPiece)
     }
 
     App.render()
@@ -36,7 +36,7 @@ export class PieceController {
 
     const belongedPiece: Piece|null = (
       moveToCell.hasPiece() ? moveToCell.getPiece() : null)
-    if (!RuleManager.canTakePieceIfExist(belongedPiece)) return
+    if (!RuleManager.canTakePieceIfExists(belongedPiece)) return
     
     selectedPiece.setNextPosition(moveToCell.getRow(), moveToCell.getColumn())
 

@@ -8,6 +8,26 @@ import { Turn } from "../models/Turn"
 import PiecePromoteManager from "./PiecePromoteManager"
 
 export default class RuleManager {
+  static existsPawnInSameColumn(piece: Piece): number[] {
+    const state: State = store.getState()
+    const board: Board = state.board
+    const boardStatus: Cell[][] = board.getStatus()
+
+    const columns: number[] = []
+    boardStatus.forEach((row: Cell[]) => {
+      row.forEach((cell: Cell) => {
+      const targetPiece = cell.hasPiece() ? cell.getPiece() : null
+      if (targetPiece !== null && targetPiece.getName() === '歩' &&
+        piece.getBelongTo() === targetPiece.getBelongTo()) {
+          const column: number = cell.getColumn()
+          columns.push(column)
+        }
+      })
+    })
+
+    return columns
+  }
+
   static canMoveOwnPiece(piece: Piece): boolean {
     const state: State = store.getState()
     const turn: Turn = state.turn
@@ -19,7 +39,7 @@ export default class RuleManager {
     return cell.isActive()
   }
 
-  static canTakePieceIfExist(piece: Piece|null): boolean {
+  static canTakePieceIfExists(piece: Piece|null): boolean {
     const state: State = store.getState()
     const turn: Turn = state.turn
     if (piece !== null && piece.isOwn(turn.getTurn())) return false
@@ -39,4 +59,5 @@ export default class RuleManager {
     if (piece.getName() === '桂' && (row === 1 || row === 7)) return true
     return false
   }
+
 }
