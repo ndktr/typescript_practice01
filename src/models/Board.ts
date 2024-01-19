@@ -120,6 +120,11 @@ export class Board {
   private addToOutOfBoardPieces(piece: Piece): void {
     piece.outFromBoard()
     this.outOfBoardPieces.push(piece)
+    this.sortOutOfBoardPieces()
+  }
+
+  private sortOutOfBoardPieces(): void {
+    this.outOfBoardPieces.sort((a: Piece, b: Piece) => a.size - b.size)
   }
 
   public removePieceFromPreviousCell(piece: Piece): void {
