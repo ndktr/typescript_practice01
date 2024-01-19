@@ -5,6 +5,7 @@ import {
   Piece, Pawn, King, Gold, Silver, Knight, Lance, Rook, Bishop 
 } from './Piece.ts'
 import PiecePromoteManager from '../services/PiecePromoteManager.ts'
+import RuleManager from '../services/RuleManager.ts'
 
 
 export class Board {
@@ -92,14 +93,14 @@ export class Board {
     const moveToColumn: number = moveToPosition[1]
     const moveToCell: Cell = this.getCell(moveToRow, moveToColumn)
 
-    if (!moveToCell.isActive()) return
-
     if (moveToCell.hasPiece()) {
       const takenPiece: Piece = moveToCell.getPiece() as Piece
       this.addToOutOfBoardPieces(takenPiece)
     }
 
-    if (PiecePromoteManager.isPromotable(piece)) {
+    if (RuleManager.canPromote(piece) && RuleManager.isMustPromote(piece, moveToCell)) {
+      piece.promote()
+    } else if (RuleManager.canPromote(piece)) {
       const answer: boolean = confirm('Promote?')
       if (answer) piece.promote()
     }
