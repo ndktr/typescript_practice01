@@ -142,6 +142,38 @@ export class Piece {
   public isPromoted(): boolean {
     return this.promoted
   }
+
+  public isPawn(): boolean {
+    return this.size === 1
+  }
+
+  public isLance(): boolean {
+    return this.size === 2
+  }
+
+  public isKnight(): boolean {
+    return this.size === 3
+  }
+
+  public isSilver(): boolean {
+    return this.size === 4
+  }
+
+  public isGold(): boolean {
+    return this.size === 5
+  }
+
+  public isBishop(): boolean {
+    return this.size === 6
+  }
+
+  public isRook(): boolean {
+    return this.size === 7
+  }
+
+  public isKing(): boolean {
+    return this.size === 8
+  }
 }
 
 
@@ -210,7 +242,8 @@ export class Rook extends Piece {
 
 export class King extends Piece {
   constructor (belongTo: number, isForward: boolean, current: number[]) {
-    const front = {name: '王', steps: [1, 1, 1, 1, 1, 1, 1, 1, 0, 0]}
+    const name: string = belongTo === 1 ? '王' : '玉'
+    const front = {name: name, steps: [1, 1, 1, 1, 1, 1, 1, 1, 0, 0]}
     const back = null
     super(front, back, 8, belongTo, isForward, current)
   }
