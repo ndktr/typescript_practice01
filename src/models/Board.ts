@@ -4,7 +4,6 @@ import { Cell } from './Cell.ts'
 import { 
   Piece, Pawn, King, Gold, Silver, Knight, Lance, Rook, Bishop 
 } from './Piece.ts'
-import PiecePromoteManager from '../services/PiecePromoteManager.ts'
 import RuleManager from '../services/RuleManager.ts'
 
 
@@ -156,12 +155,16 @@ export class Board {
     })
   }
 
-  public highlightAllNextPositionsForOutOfBoard = (): void => {
+  public highlightAllNextPositionsForOutOfBoard = (piece: Piece): void => {
     this.deactivateAllCell()
+
+    const columnsHasPawn: number[] = RuleManager.existsPawnInSameColumn(piece)
 
     this.status.forEach((row: Cell[]) => {
       for (const cell of row) {
         if (cell.hasPiece()) continue
+        const column: number = cell.getColumn()
+        if (columnsHasPawn.includes(column)) continue
         cell.activate()
       }
     })
