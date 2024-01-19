@@ -113,8 +113,6 @@ export class Board {
     }
 
     if (!piece.isOnBoard()) piece.setOnBoard()
-    console.log('################################')
-    console.log(piece)
 
     moveToCell.set(piece)
   }
