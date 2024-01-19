@@ -12,6 +12,12 @@ export class Board {
   private outOfBoardPieces: Piece[]
 
   constructor() {
+    this.status = []
+    this.outOfBoardPieces = []
+    this.init()
+  }
+
+  public init(): void {
     this.status =  (
       Array.from({length:9}).map(
         (_, i) => Array.from({length:9}).map(
@@ -21,7 +27,7 @@ export class Board {
 
     this.set(new Lance(1, true, [0, 0]))
     this.set(new Knight(1, true, [0, 1]))
-    this.set(new Silver(1, true, [5, 2]))
+    this.set(new Silver(1, true, [0, 2]))
     this.set(new Gold(1, true, [0, 3]))
     this.set(new King(1, true, [0, 4]))
     this.set(new Gold(1, true, [0, 5]))

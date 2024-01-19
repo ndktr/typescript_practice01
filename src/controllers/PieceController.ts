@@ -37,6 +37,14 @@ export class PieceController {
     const belongedPiece: Piece|null = (
       moveToCell.hasPiece() ? moveToCell.getPiece() : null)
     if (!RuleManager.canTakePieceIfExists(belongedPiece)) return
+
+    if (RuleManager.isWin(belongedPiece)) {
+      alert(`Player ${turn.getTurn()} won!`)
+      board.init()
+      turn.init()
+      App.render()
+      return
+    }
     
     selectedPiece.setNextPosition(moveToCell.getRow(), moveToCell.getColumn())
 
