@@ -155,6 +155,7 @@ export class Board {
     })
   }
 
+  //TODO: write logic in the case of king is targeted
   public highlightAllNextPositionsForOutOfBoard = (piece: Piece): void => {
     this.deactivateAllCell()
 

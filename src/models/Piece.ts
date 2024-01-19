@@ -210,7 +210,8 @@ export class Rook extends Piece {
 
 export class King extends Piece {
   constructor (belongTo: number, isForward: boolean, current: number[]) {
-    const front = {name: '王', steps: [1, 1, 1, 1, 1, 1, 1, 1, 0, 0]}
+    const name: string = belongTo === 1 ? '王' : '玉'
+    const front = {name: name, steps: [1, 1, 1, 1, 1, 1, 1, 1, 0, 0]}
     const back = null
     super(front, back, 8, belongTo, isForward, current)
   }

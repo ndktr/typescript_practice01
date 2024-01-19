@@ -8,26 +8,6 @@ import { Turn } from "../models/Turn"
 import PiecePromoteManager from "./PiecePromoteManager"
 
 export default class RuleManager {
-  static existsPawnInSameColumn(piece: Piece): number[] {
-    const state: State = store.getState()
-    const board: Board = state.board
-    const boardStatus: Cell[][] = board.getStatus()
-
-    const columns: number[] = []
-    boardStatus.forEach((row: Cell[]) => {
-      row.forEach((cell: Cell) => {
-      const targetPiece = cell.hasPiece() ? cell.getPiece() : null
-      if (targetPiece !== null && targetPiece.getName() === '歩' &&
-        piece.getBelongTo() === targetPiece.getBelongTo()) {
-          const column: number = cell.getColumn()
-          columns.push(column)
-        }
-      })
-    })
-
-    return columns
-  }
-
   static canMoveOwnPiece(piece: Piece): boolean {
     const state: State = store.getState()
     const turn: Turn = state.turn
@@ -60,4 +40,23 @@ export default class RuleManager {
     return false
   }
 
+  static existsPawnInSameColumn(piece: Piece): number[] {
+    const state: State = store.getState()
+    const board: Board = state.board
+    const boardStatus: Cell[][] = board.getStatus()
+
+    const columns: number[] = []
+    boardStatus.forEach((row: Cell[]) => {
+      row.forEach((cell: Cell) => {
+      const targetPiece = cell.hasPiece() ? cell.getPiece() : null
+      if (targetPiece !== null && targetPiece.getName() === '歩' &&
+        piece.getBelongTo() === targetPiece.getBelongTo()) {
+          const column: number = cell.getColumn()
+          columns.push(column)
+        }
+      })
+    })
+
+    return columns
+  }
 }
