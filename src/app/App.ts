@@ -1,5 +1,6 @@
 import store from "../store/Store"
 import { PieceController } from "../controllers/PieceController"
+import { Turn } from '../models/Turn'
 import { Board } from "../models/Board"
 import { Cell } from "../models/Cell"
 import { Piece } from "../models/Piece"
@@ -97,5 +98,13 @@ export class App {
     app.appendChild(boardHtml)
     app.appendChild(outOfBoardHtml1)
     app.appendChild(outOfBoardHtml2)
+  }
+
+  static init(): void {
+    const resettedBoard: Board = new Board()
+    const resettedTurn: Turn = new Turn()
+    store.setBoard(resettedBoard)
+    store.setTurn(resettedTurn)
+    App.render()
   }
 }
