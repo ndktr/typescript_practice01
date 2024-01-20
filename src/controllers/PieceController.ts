@@ -40,9 +40,7 @@ export class PieceController {
 
     if (RuleManager.isWin(belongedPiece)) {
       alert(`Player ${turn.getTurn()} won!`)
-      board.init()
-      turn.init()
-      App.render()
+      App.init()
       return
     }
     

@@ -44,14 +44,14 @@ export default class RuleManager {
 
     const state: State = store.getState()
     const board: Board = state.board
+    const turn: Turn = state.turn
     const boardStatus: Cell[][] = board.getStatus()
 
     const columns: number[] = []
     boardStatus.forEach((row: Cell[]) => {
       row.forEach((cell: Cell) => {
-      const targetPiece = cell.hasPiece() ? cell.getPiece() : null
-      if (targetPiece !== null && targetPiece.isPawn() &&
-        piece.getBelongTo() === targetPiece.getBelongTo()) {
+        const targetPiece = cell.hasPiece() ? cell.getPiece() : null
+        if (targetPiece !== null && RuleManager.isSameSidePawn(targetPiece, turn)) {
           const column: number = cell.getColumn()
           columns.push(column)
         }
@@ -59,6 +59,11 @@ export default class RuleManager {
     })
 
     return columns
+  }
+
+  static isSameSidePawn(piece: Piece, turn: Turn): boolean {
+    if (piece.isPawn() && !piece.isPromoted() && piece.isOwn(turn.getTurn())) return true 
+    return false
   }
 
   static cannotSetToTheRow(piece: Piece, row: number): boolean {

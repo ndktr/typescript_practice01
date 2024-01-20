@@ -13,6 +13,7 @@ export class Board {
 
   constructor() {
     this.status = []
+    const arrow: Piece = new Lance(1, true, [0, 0])
     this.outOfBoardPieces = []
     this.init()
   }
@@ -22,8 +23,6 @@ export class Board {
       Array.from({length:9}).map(
         (_, i) => Array.from({length:9}).map(
           (_, j) => new Cell(i, j))))
-
-    this.outOfBoardPieces = [] 
 
     this.set(new Lance(1, true, [0, 0]))
     this.set(new Knight(1, true, [0, 1]))

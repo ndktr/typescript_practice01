@@ -6,11 +6,7 @@ import { Turn } from "../models/Turn";
 
 
 class Store {
-  private state: {
-    board: Board,
-    turn: Turn,
-    selectedPiece: Piece|null
-  }
+  private state: State
 
   constructor(board: Board, turn: Turn) {
     this.state = {
@@ -18,10 +14,6 @@ class Store {
       turn: turn,
       selectedPiece: null
     }
-  }
-
-  public getState(): State {
-    return this.state
   }
 
   setBoard(board: Board): void {
@@ -34,6 +26,10 @@ class Store {
 
   setSelectedPiece(piece: Piece|null): void {
     this.state.selectedPiece = piece
+  }
+
+  public getState(): State {
+    return this.state
   }
 }
 
