@@ -123,13 +123,13 @@ html, body {
 }
 
 .player-text-1 {
-    top: -23px;
+    top: -30px;
     left: 0;
     color: red;
 }
 
 .player-text-2 {
-    bottom: -23px;
+    bottom: -30px;
     right: 0;
     color: blue;
 }
