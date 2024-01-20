@@ -9,8 +9,19 @@ import { Piece } from "../models/Piece"
 export class App {
   static createGame(board: Board): HTMLElement {
     const boardStatus: Cell[][] = board.getStatus()
+    const outOfBoardPieces: Piece[] = board.getOutOfBoardPieces()
 
-    const boardDiv: HTMLElement = App.createBoard()
+    // TODO: Need to change
+    const boardOuterDiv: HTMLElement = App.createBoard()
+    const outOfBoardHtml1: HTMLElement = App.createOutOfBoard(outOfBoardPieces, 1)
+    const outOfBoardHtml2: HTMLElement = App.createOutOfBoard(outOfBoardPieces, 2)
+    const playerTextHtml1: HTMLElement = App.createPlayerText(1)
+    const playerTextHtml2: HTMLElement = App.createPlayerText(2)
+    boardOuterDiv.appendChild(outOfBoardHtml1)
+    boardOuterDiv.appendChild(outOfBoardHtml2)
+    boardOuterDiv.appendChild(playerTextHtml1)
+    boardOuterDiv.appendChild(playerTextHtml2)
+    const boardDiv: HTMLElement = boardOuterDiv.firstElementChild as HTMLElement 
 
     boardStatus.forEach((row: Cell[]) => {
       const rowDiv: HTMLElement = App.createRow()
@@ -25,15 +36,21 @@ export class App {
 
     const gameDiv: HTMLElement = document.createElement('div')
     gameDiv.id = 'game'
-    gameDiv.appendChild(boardDiv)
+    gameDiv.appendChild(boardOuterDiv)
+
+    // gameDiv.appendChild(playerTextHtml1)
+    // gameDiv.appendChild(playerTextHtml2)
 
     return gameDiv
   }
 
   static createBoard(): HTMLElement {
+    const boardOuterDiv: HTMLElement = document.createElement('div')
     const boardDiv: HTMLElement = document.createElement('div')
+    boardOuterDiv.id = 'board-outer'
     boardDiv.id = 'board'
-    return boardDiv
+    boardOuterDiv.appendChild(boardDiv)
+    return boardOuterDiv
   }
 
   static createRow(): HTMLElement {
@@ -77,11 +94,21 @@ export class App {
     outOfBoardDiv.classList.add(`out-of-board-${belongTo}`)
     const filteredOutOfBoardPieces: Piece[] = (
       outOfBoardPieces.filter((piece: Piece) => piece.getBelongTo() === belongTo)) 
-    filteredOutOfBoardPieces.forEach((piece: Piece) => {
+    filteredOutOfBoardPieces.forEach((piece: Piece, counter: number) => {
       const pieceDiv: HTMLElement = App.createPiece(piece)
+      if (counter >= 9) pieceDiv.classList.add('not-top')
+      if ((counter+1) % 9 === 0 || filteredOutOfBoardPieces.length === (counter+1)) pieceDiv.classList.add('line-end')
       outOfBoardDiv.appendChild(pieceDiv)
     })
     return outOfBoardDiv
+  }
+
+  static createPlayerText(playerNumber: number): HTMLElement {
+    const playerTextDiv: HTMLElement = document.createElement('div')
+    playerTextDiv.classList.add(`player-text`)
+    playerTextDiv.classList.add(`player-text-${playerNumber}`)
+    playerTextDiv.innerHTML = `Player ${playerNumber}` 
+    return playerTextDiv
   }
 
   static render(): void {
@@ -89,15 +116,10 @@ export class App {
     if (app === null) return
 
     const board: Board = store.getState().board
-    const outOfBoardPieces: Piece[] = board.getOutOfBoardPieces()
 
     const boardHtml: HTMLElement = App.createGame(board)
-    const outOfBoardHtml1: HTMLElement = App.createOutOfBoard(outOfBoardPieces, 1)
-    const outOfBoardHtml2: HTMLElement = App.createOutOfBoard(outOfBoardPieces, 2)
     app.innerHTML = ''
     app.appendChild(boardHtml)
-    app.appendChild(outOfBoardHtml1)
-    app.appendChild(outOfBoardHtml2)
   }
 
   static init(): void {
