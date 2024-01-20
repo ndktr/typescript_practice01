@@ -1,31 +1,37 @@
-export class PieceCalcurator {
+import { cloneDeep } from 'lodash'
+
+export default class PieceDirectionManager {
   static registry: Record<string, (currentPosition: number[], isForward: boolean) => number[]> = {
-    'forward': PieceCalcurator.addOneToForward,
-    'rightForward': PieceCalcurator.addOneToRightForward,
-    'right': PieceCalcurator.addOneToRight,
-    'rightBackward': PieceCalcurator.addOneToRightBackward,
-    'backward': PieceCalcurator.addOneToBackward,
-    'leftBackward': PieceCalcurator.addOneToLeftBackward,
-    'left': PieceCalcurator.addOneToLeft,
-    'leftForward': PieceCalcurator.addOneToLeftForward,
-    'knightRightForward': PieceCalcurator.addOneToKnightRightForward,
-    'knightLeftForward': PieceCalcurator.addOneToKnightLeftForward
+    'forward': PieceDirectionManager.addOneToForward,
+    'rightForward': PieceDirectionManager.addOneToRightForward,
+    'right': PieceDirectionManager.addOneToRight,
+    'rightBackward': PieceDirectionManager.addOneToRightBackward,
+    'backward': PieceDirectionManager.addOneToBackward,
+    'leftBackward': PieceDirectionManager.addOneToLeftBackward,
+    'left': PieceDirectionManager.addOneToLeft,
+    'leftForward': PieceDirectionManager.addOneToLeftForward,
+    'knightRightForward': PieceDirectionManager.addOneToKnightRightForward,
+    'knightLeftForward': PieceDirectionManager.addOneToKnightLeftForward
   }
   
-  static getNextPosition(direction: string, isForward: boolean, currentPosition: number[], step: number) {
-    const nextPosition: number[] = [...currentPosition]
-    const addOneToProperDirection = PieceCalcurator.registry[direction]
+  static getNextPositions(direction: string, isForward: boolean, currentPosition: number[], step: number): number[][] {
+    if (step === 0) return [[-1, -1]]
 
-    if (!addOneToProperDirection) console.error('registry do not have function') 
+    const nextPositions: number[][] = []
 
+    const addOneToProperDirection = PieceDirectionManager.registry[direction]
+    if (!addOneToProperDirection) console.error('registry do not have such a function') 
+
+    const nextPosition: number[] = cloneDeep(currentPosition)
     for (let i = 0; i < step; i++) {
       const [row, column] = addOneToProperDirection(nextPosition, isForward)
-      if (!PieceCalcurator.isWithinBoard(row, column)) break
+      if (!PieceDirectionManager.isWithinBoard(row, column)) break
       nextPosition[0] = row
       nextPosition[1] = column
+      nextPositions.push(cloneDeep(nextPosition))
     }
 
-    return nextPosition
+    return (nextPositions.length !== 0) ? nextPositions : [[-1, -1]] 
   }
 
   static addOneToForward(currentPosition: number[], isForward: boolean): number[] {
@@ -99,7 +105,7 @@ export class PieceCalcurator {
     return [row-2, column-1]
   }
 
-  static isWithinBoard(row: number, column: number) {
+  static isWithinBoard(row: number, column: number): boolean {
     if (row > 8 || row < 0 || column > 8 || column < 0) {
       return false
     }
