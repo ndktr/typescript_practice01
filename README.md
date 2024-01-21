@@ -3,6 +3,6 @@
 - simple shogi app (for two players)
 
 ## how to use
-- clone from main branch
-- ```npm install```
-- ```npm run dev```
+1. clone from main branch
+2. ```npm install```
+3. ```npm run dev```
