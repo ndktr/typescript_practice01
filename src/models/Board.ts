@@ -13,7 +13,6 @@ export class Board {
 
   constructor() {
     this.status = []
-    const arrow: Piece = new Lance(1, true, [0, 0])
     this.outOfBoardPieces = []
     this.init()
   }
