@@ -38,9 +38,6 @@ export class App {
     gameDiv.id = 'game'
     gameDiv.appendChild(boardOuterDiv)
 
-    // gameDiv.appendChild(playerTextHtml1)
-    // gameDiv.appendChild(playerTextHtml2)
-
     return gameDiv
   }
 
@@ -83,6 +80,7 @@ export class App {
     const pieceDiv: HTMLElement = document.createElement('div')
     pieceDiv.classList.add('piece')
     pieceDiv.classList.add(`piece-${piece.getBelongTo()}`)
+    if (piece.isPromoted()) pieceDiv.classList.add('promoted')
     pieceDiv.innerHTML = piece.getName()
     pieceDiv.addEventListener('click', () => { PieceController.selectPiece(piece) })
     return pieceDiv

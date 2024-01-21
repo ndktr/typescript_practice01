@@ -71,6 +71,11 @@ html, body {
     transform: rotate(180deg);
 }
 
+#board-outer #board .row .cell .piece.promoted {
+    font-weight: bold;
+    color: red;
+}
+
 .out-of-board {
     border: 1px solid #000;
     position: absolute;
@@ -120,16 +125,15 @@ html, body {
 
 .player-text {
     position: absolute;
+    font-weight: bold;
 }
 
 .player-text-1 {
     top: -30px;
     left: 0;
-    color: red;
 }
 
 .player-text-2 {
     bottom: -30px;
     right: 0;
-    color: blue;
 }
